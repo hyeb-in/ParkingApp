@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import auth from "@react-native-firebase/auth";
 import { NavigationContainer } from "@react-navigation/native";
