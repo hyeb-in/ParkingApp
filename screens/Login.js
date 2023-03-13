@@ -13,8 +13,16 @@ const Login = ({ navigation: { navigate } }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginSubmit = () => {
-    auth().signInWithEmailAndPassword(email, password);
+  const loginSubmit = async () => {
+    try {
+      const logInUser = await auth().signInWithEmailAndPassword(
+        email,
+        password
+      );
+      console.log(logInUser);
+    } catch (e) {
+      Alert.alert(e.code);
+    }
   };
 
   return (
