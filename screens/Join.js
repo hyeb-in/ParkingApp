@@ -4,7 +4,6 @@ import { ActivityIndicator, Alert, TextInput } from "react-native";
 import styled from "styled-components/native";
 
 const Container = styled.View``;
-const Text = styled.Text``;
 const Btn = styled.TouchableOpacity``;
 const BtnText = styled.Text``;
 
@@ -15,24 +14,23 @@ const Join = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
+  //회원가입 함수
   const joinSubmit = async () => {
     if (email === "" || password === "") {
-      return Alert.alert("Fill in the form");
+      return Alert.alert("공백 채우기");
     } else if (password != confirmPassword) {
-      return Alert.alert("password doesn't matched");
+      return Alert.alert("비밀번호 불일치");
     }
-    if (loading) {
+    if (isLoading) {
       return;
     }
-    setLoading(true);
+    setIsLoading(true);
+
     try {
-      const userCredential = await auth().createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      console.log(userCredential);
+      //회원가입
+      await auth().createUserWithEmailAndPassword(email, password);
     } catch (e) {
       Alert.alert(e.code);
     }
@@ -40,6 +38,7 @@ const Join = () => {
 
   return (
     <Container>
+      {/* 이메일 */}
       <TextInput
         placeholder="Email"
         keyboardType="email-address"
@@ -50,6 +49,7 @@ const Join = () => {
         onChangeText={(text) => setEmail(text)}
         onSubmitEditing={() => passwordInput.current.focus()}
       />
+      {/* 비밀번호 */}
       <TextInput
         ref={passwordInput}
         placeholder="Password"
@@ -59,6 +59,7 @@ const Join = () => {
         onChangeText={(text) => setPassword(text)}
         onSubmitEditing={() => confirmPasswordInput.current.focus()}
       />
+      {/* 비밀번호 확인 */}
       <TextInput
         ref={confirmPasswordInput}
         placeholder="Confirm Password"
@@ -69,7 +70,7 @@ const Join = () => {
         onSubmitEditing={joinSubmit}
       />
       <Btn onPress={joinSubmit}>
-        {loading ? <ActivityIndicator /> : <BtnText>Creat Account</BtnText>}
+        {isLoading ? <ActivityIndicator /> : <BtnText> 회원가입 </BtnText>}
       </Btn>
     </Container>
   );

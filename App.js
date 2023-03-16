@@ -2,8 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import auth from "@react-native-firebase/auth";
 import { NavigationContainer } from "@react-navigation/native";
-import OutNav from "./navigators/OutNav";
-import InNav from "./navigators/InNav";
+import LogInNav from "./navigators/LogInNav";
+import LogOutNav from "./navigators/LogOutNav";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,7 +19,7 @@ export default function App() {
   }, []);
   return (
     <NavigationContainer>
-      {isLoggedIn ? <InNav /> : <OutNav />}
+      {isLoggedIn ? <LogInNav /> : <LogOutNav />}
     </NavigationContainer>
   );
 }

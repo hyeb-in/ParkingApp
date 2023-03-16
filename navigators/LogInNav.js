@@ -4,10 +4,10 @@ import Home from "../screens/Home";
 
 const Nav = createNativeStackNavigator();
 
-const InNav = () => (
+const LogInNav = () => (
   <Nav.Navigator>
     <Nav.Screen name="Home" component={Home} />
   </Nav.Navigator>
 );
 
-export default InNav;
+export default LogInNav;

@@ -8,11 +8,13 @@ const Text = styled.Text``;
 const Btn = styled.TouchableOpacity``;
 const BtnText = styled.Text``;
 
+//로그인 함수
 const Login = ({ navigation: { navigate } }) => {
   const passwordInput = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  //로그인
   const loginSubmit = async () => {
     try {
       const logInUser = await auth().signInWithEmailAndPassword(
@@ -50,7 +52,7 @@ const Login = ({ navigation: { navigate } }) => {
         <BtnText>Log In</BtnText>
       </Btn>
       <Text>
-        Don't have an account?{" "}
+        회원가입
         <Btn onPress={() => navigate("Join")}>
           <BtnText>Join ➡️</BtnText>
         </Btn>

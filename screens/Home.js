@@ -12,7 +12,7 @@ const logOut = () => {
 };
 const Home = () => (
   <Container>
-    <Text>HOME</Text>
+    <Text>희희</Text>
     <Btn onPress={logOut}>
       <BtnText>Log Out</BtnText>
     </Btn>
