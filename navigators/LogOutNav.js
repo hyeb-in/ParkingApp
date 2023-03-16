@@ -5,11 +5,11 @@ import Login from "../screens/Login";
 
 const Nav = createNativeStackNavigator();
 
-const OutNav = () => (
+const LogOutNav = () => (
   <Nav.Navigator>
     <Nav.Screen name="Login" component={Login} />
     <Nav.Screen name="Join" component={Join} />
   </Nav.Navigator>
 );
 
-export default OutNav;
+export default LogOutNav;

@@ -8,6 +8,7 @@ const Text = styled.Text``;
 const Btn = styled.TouchableOpacity``;
 const BtnText = styled.Text``;
 
+//로그인 함수
 const Login = ({ navigation: { navigate } }) => {
   const passwordInput = useRef();
   const [email, setEmail] = useState("");
@@ -15,6 +16,7 @@ const Login = ({ navigation: { navigate } }) => {
 
   const loginSubmit = async () => {
     try {
+      //firebase 로그인
       const logInUser = await auth().signInWithEmailAndPassword(
         email,
         password
@@ -50,7 +52,7 @@ const Login = ({ navigation: { navigate } }) => {
         <BtnText>Log In</BtnText>
       </Btn>
       <Text>
-        Don't have an account?{" "}
+        회원가입
         <Btn onPress={() => navigate("Join")}>
           <BtnText>Join ➡️</BtnText>
         </Btn>

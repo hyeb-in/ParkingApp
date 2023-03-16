@@ -10,9 +10,10 @@ const BtnText = styled.Text``;
 const logOut = () => {
   auth().signOut();
 };
+
 const Home = () => (
   <Container>
-    <Text>HOME</Text>
+    <Text>홈</Text>
     <Btn onPress={logOut}>
       <BtnText>Log Out</BtnText>
     </Btn>

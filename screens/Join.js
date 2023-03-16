@@ -15,24 +15,22 @@ const Join = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
+  //회원가입 함수
   const joinSubmit = async () => {
     if (email === "" || password === "") {
-      return Alert.alert("Fill in the form");
+      return Alert.alert("공백 채우기");
     } else if (password != confirmPassword) {
-      return Alert.alert("password doesn't matched");
+      return Alert.alert("비밀번호 불일치");
     }
-    if (loading) {
+    if (isLoading) {
       return;
     }
-    setLoading(true);
+    setIsLoading(true);
     try {
-      const userCredential = await auth().createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      console.log(userCredential);
+      //firebase 회원가입
+      await auth().createUserWithEmailAndPassword(email, password);
     } catch (e) {
       Alert.alert(e.code);
     }
@@ -69,7 +67,7 @@ const Join = () => {
         onSubmitEditing={joinSubmit}
       />
       <Btn onPress={joinSubmit}>
-        {loading ? <ActivityIndicator /> : <BtnText>Creat Account</BtnText>}
+        {isLoading ? <ActivityIndicator /> : <BtnText>Creat Account</BtnText>}
       </Btn>
     </Container>
   );
