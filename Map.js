@@ -9,10 +9,6 @@ const Text = styled.Text``;
 const Btn = styled.TouchableOpacity``;
 const BtnText = styled.Text``;
 
-// const logOut = () => {
-//   auth().signOut();
-// };
-
 const MapGoogle = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongtitude] = useState(null);

@@ -44,38 +44,26 @@ const Home = () => {
   }, []);
 
   return (
-    <View>
-      <MapView
-        style={{ flex: 1 }}
-        provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: latitude,
-          longitude: longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
-    </View>
-    // <Container>
-    //   <View style={{ flex: 1 }}>
-    //     {loading ? (
-    //       <View>
-    //         <Text>로딩중 </Text>
-    //       </View>
-    //     ) : (
-    //       <MapView
-    //         style={{ flex: 1 }}
-    //         provider={PROVIDER_GOOGLE}
-    //         initialRegion={{
-    //           latitude: latitude,
-    //           longitude: longitude,
-    //           latitudeDelta: 0.0922,
-    //           longitudeDelta: 0.0421,
-    //         }}
-    //       />
-    //     )}
-    //   </View>
-    // </Container>
+    <Container>
+      <View style={{ flex: 1 }}>
+        {loading ? (
+          <View>
+            <Text>로딩중 </Text>
+          </View>
+        ) : (
+          <MapView
+            style={{ flex: 1 }}
+            provider={PROVIDER_GOOGLE}
+            initialRegion={{
+              latitude: latitude,
+              longitude: longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          />
+        )}
+      </View>
+    </Container>
   );
 };
 
