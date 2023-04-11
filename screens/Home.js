@@ -3,6 +3,8 @@ import { View } from "react-native";
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import React, { useEffect, useState } from "react";
+import { ActivityIndicator } from "react-native";
+import { TextInput } from "react-native";
 
 const Container = styled.View``;
 const Text = styled.Text``;
@@ -47,7 +49,11 @@ const Home = () => {
     <View style={{ flex: 1 }}>
       {loading ? (
         <View>
-          <Text>Loading... </Text>
+          <ActivityIndicator
+            size="large"
+            color="black"
+            style={{ marginTop: 350 }}
+          />
         </View>
       ) : (
         <MapView
