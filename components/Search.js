@@ -1,7 +1,17 @@
 import styled from "styled-components/native";
 import { View, TextInput, Text } from "react-native";
+import { useState } from "react";
 
 const Search = () => {
+  const [text, setText] = useState("");
+
+  const onChangeText = (content) => {
+    console.log(content);
+    setText(content);
+  };
+
+  const submitText = () => {};
+
   return (
     <View style={{ position: "absolute", top: 10, width: "100%" }}>
       <TextInput
@@ -20,6 +30,9 @@ const Search = () => {
         }}
         placeholder={"Search"}
         placeholderTextColor={"#666"}
+        onChangeText={onChangeText}
+        value={text}
+        onSubmitEditing={submitText}
       />
     </View>
   );
