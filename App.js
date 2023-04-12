@@ -11,6 +11,7 @@ export default function App() {
   return (
     <View style={{ flex: 1 }}>
       <Home />
+      <StatusBar style={{ color: "black" }} />
     </View>
   );
 }
