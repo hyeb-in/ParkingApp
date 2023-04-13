@@ -10,8 +10,9 @@ const Search = () => {
     setText(content);
   };
 
-  const submitText = () => {};
-
+  const submitText = () => {
+    setText("");
+  };
   return (
     <View style={{ position: "absolute", top: 10, width: "100%" }}>
       <TextInput
