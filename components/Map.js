@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { TextInput } from "react-native";
 import Search from "./Search";
-import Tab from "./Tab";
+import BottomTabNavigationApp from "./Tab";
 
 const Container = styled.View``;
 const Text = styled.Text``;
@@ -75,7 +75,7 @@ const MapScreen = () => {
             }}
           />
           <Search />
-          <Tab />
+          <BottomTabNavigationApp />
         </View>
         {console.log(loading, latitude, longitude)}
       </>

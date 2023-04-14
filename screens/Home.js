@@ -7,7 +7,7 @@ import { ActivityIndicator } from "react-native";
 import { TextInput } from "react-native";
 import MapScreen from "../components/Map";
 import Search from "../components/Search";
-import Tab from "../components/Tab";
+import BottomTabNavigationApp from "../components/Tab";
 
 
 // const Container = styled.View``;

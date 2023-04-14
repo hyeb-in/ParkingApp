@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MapScreen from "./Map";
 
 const Tab = createBottomTabNavigator();
 
@@ -10,16 +11,16 @@ function HomeScreen() {
   return <Text>Home</Text>;
 }
 
-function SearchScreen() {
-  return <Text>Search</Text>;
-}
+// function SearchScrreen() {              //알림
+//   return <Text>Search</Text>;
+// }
 
-function NotificationScreen() {
-  return <Text>Notification</Text>;
-}
+// function NotificationScreen() {        // 검색
+//   return <Text>Notification</Text>;
+// }
 
 function MessageScreen() {
-  return <Text>Message</Text>;
+  return <Text>MyPage</Text>;
 }
 
 function BottomTabNavigationApp() {
@@ -36,7 +37,8 @@ function BottomTabNavigationApp() {
             ),
           }}
         />
-        <Tab.Screen
+        
+        {/* <Tab.Screen
           name="Search"
           component={SearchScreen}
           options={{
@@ -55,20 +57,27 @@ function BottomTabNavigationApp() {
               <Icon name="search" color={color} size={size} />
             ),
           }}
-        />
+        /> */}
+
         <Tab.Screen
-          name="Message"
+          name="MyPage"
           component={MessageScreen}
           options={{
-            title: '메시지',
+            title: 'My Page',
             tabBarIcon: ({color, size}) => (
-              <Icon name="message" color={color} size={size} />
+              <Icon name="person" color={color} size={size} />
             ),
           }}
         />
       </Tab.Navigator>
     </NavigationContainer>
-  );
+  );  
 }
 
+const MainScreen = () => {
+  <View>
+    <Search />
+    <MapScreen />
+  </View>
+}
 export default BottomTabNavigationApp;
