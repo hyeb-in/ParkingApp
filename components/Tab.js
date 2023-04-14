@@ -7,19 +7,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const Tab = createBottomTabNavigator();
 
 function HomeScreen() {
-  return <Text>Home</Text>;
+  return <Text>홈 내용</Text>; //Map.js 넣을 것
 }
 
-function SearchScreen() {
-  return <Text>Search</Text>;
-}
-
-function NotificationScreen() {
-  return <Text>Notification</Text>;
-}
-
-function MessageScreen() {
-  return <Text>Message</Text>;
+function MyPageScreen() {
+  return <Text>마이페이지 내용</Text>; // 이 줄 빼고 마이페이지 화면 구성할 것
 }
 
 function BottomTabNavigationApp() {
@@ -29,40 +21,24 @@ function BottomTabNavigationApp() {
         <Tab.Screen
           name="Home"
           component={HomeScreen}
-          options={{
-            title: '홈',
-            tabBarIcon: ({color, size}) => (
-              <Icon name="home" color={color} size={size} />
-            ),
-          }}
+           options={{
+             title: '홈',
+             headerShown: false,
+             tabBarLabelPosition: 'beside-icon',
+             tabBarIcon: ({color, size}) => (
+               <Icon name="home" color={color} size={size} />
+             ),
+           }}
         />
         <Tab.Screen
-          name="Search"
-          component={SearchScreen}
+          name="MyPage"
+          component={MyPageScreen}
           options={{
-            title: '알림',
+            title: '마이 페이지',
+            //headerShown: false,
+            tabBarLabelPosition: 'beside-icon',
             tabBarIcon: ({color, size}) => (
-              <Icon name="notifications" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Notification"
-          component={NotificationScreen}
-          options={{
-            title: '검색',
-            tabBarIcon: ({color, size}) => (
-              <Icon name="search" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Message"
-          component={MessageScreen}
-          options={{
-            title: '메시지',
-            tabBarIcon: ({color, size}) => (
-              <Icon name="message" color={color} size={size} />
+              <Icon name="person" color={color} size={size} />
             ),
           }}
         />
