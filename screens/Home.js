@@ -9,11 +9,14 @@ import MapScreen from "../components/Map";
 import Search from "../components/Search";
 import BottomTabNavigationApp from "../components/Tab";
 
+<<<<<<< HEAD
 const Home = () => {
   return <BottomTabNavigationApp />;
 };
 
 export default Home;
+=======
+>>>>>>> 535f32f572aaa5a59ab694073affba52f54235b9
 
 // const Container = styled.View``;
 // const Text = styled.Text``;
@@ -86,3 +89,11 @@ export default Home;
 
 // export default Home;
 
+<<<<<<< HEAD
+=======
+const Home = () => {
+  return <MapScreen />;
+};
+
+export default Home;
+>>>>>>> 535f32f572aaa5a59ab694073affba52f54235b9
