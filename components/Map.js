@@ -14,23 +14,8 @@ const BtnText = styled.Text``;
 
 const mapStyle = [
   {
-    elementType: "labels",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
-  },
-  {
-    featureType: "administrative.land_parcel",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
-  },
-  {
-    featureType: "administrative.neighborhood",
+    featureType: "poi",
+    elementType: "labels.icon",
     stylers: [
       {
         visibility: "off",
@@ -58,8 +43,10 @@ const MapScreen = () => {
         coords: { latitude, longitude },
       } = await Location.getCurrentPositionAsync();
 
-      setLatitude(37.583);
-      setLongtitude(127.0106);
+      // setLatitude(37.583);
+      // setLongtitude(127.0106);
+      setLatitude(latitude);
+      setLongtitude(longitude);
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -88,9 +75,8 @@ const MapScreen = () => {
       <>
         <View style={{ flex: 1 }}>
           <MapView
-            style={{ ...mapStyle, flex: 1, width: "100%", height: "100%" }}
+            style={{ flex: 1, width: "100%", height: "100%" }}
             provider={PROVIDER_GOOGLE}
-            showsUserLocation={true}
             customMapStyle={mapStyle}
             region={{
               latitude: latitude,
@@ -98,6 +84,7 @@ const MapScreen = () => {
               latitudeDelta: 0.015,
               longitudeDelta: 0.008,
             }}
+            showsUserLocation={true}
           >
             {/* 아래는 마커 코드 latitude, longitude이용해서 위치 하면 될 듯,, */}
             {/* <Marker
