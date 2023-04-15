@@ -58,8 +58,8 @@ const MapScreen = () => {
         coords: { latitude, longitude },
       } = await Location.getCurrentPositionAsync();
 
-      setLatitude(latitude);
-      setLongtitude(longitude);
+      setLatitude(37.5830);
+      setLongtitude(127.0106);
       setLoading(false);
     } catch (e) {
       console.log(e);
