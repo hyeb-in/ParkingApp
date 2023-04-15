@@ -12,15 +12,39 @@ const Text = styled.Text``;
 const Btn = styled.TouchableOpacity``;
 const BtnText = styled.Text``;
 
-// const logOut = () => {
-//   auth().signOut();
-// };
+const mapStyle = [
+  {
+    elementType: "labels",
+    stylers: [
+      {
+        visibility: "off",
+      },
+    ],
+  },
+  {
+    featureType: "administrative.land_parcel",
+    stylers: [
+      {
+        visibility: "off",
+      },
+    ],
+  },
+  {
+    featureType: "administrative.neighborhood",
+    stylers: [
+      {
+        visibility: "off",
+      },
+    ],
+  },
+];
 
 const MapScreen = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongtitude] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -64,21 +88,23 @@ const MapScreen = () => {
       <>
         <View style={{ flex: 1 }}>
           <MapView
-            style={{ flex: 1, width: "100%", height: "100%" }}
+            style={{ ...mapStyle, flex: 1, width: "100%", height: "100%" }}
             provider={PROVIDER_GOOGLE}
-            initialRegion={{
+            showsUserLocation={true}
+            customMapStyle={mapStyle}
+            region={{
               latitude: latitude,
               longitude: longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              latitudeDelta: 0.015,
+              longitudeDelta: 0.008,
             }}
           >
-            {/* 마커 */}
-            <Marker
+            {/* 아래는 마커 코드 latitude, longitude이용해서 위치 하면 될 듯,, */}
+            {/* <Marker
               coordinate={{ latitude, longitude }}
               title="this is a marker"
               description="this is a marker example"
-            />
+            /> */}
           </MapView>
           <Search />
         </View>
