@@ -72,7 +72,14 @@ const MapScreen = () => {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
-          />
+          >
+            {/* 마커 */}
+            <Marker
+              coordinate={{ latitude, longitude }}
+              title="this is a marker"
+              description="this is a marker example"
+            />
+          </MapView>
           <Search />
         </View>
         {console.log(loading, latitude, longitude)}
