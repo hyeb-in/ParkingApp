@@ -7,6 +7,13 @@ import { ActivityIndicator } from "react-native";
 import { TextInput } from "react-native";
 import MapScreen from "../components/Map";
 import Search from "../components/Search";
+import BottomTabNavigationApp from "../components/Tab";
+
+const Home = () => {
+  return <BottomTabNavigationApp />;
+};
+
+export default Home;
 
 // const Container = styled.View``;
 // const Text = styled.Text``;
@@ -78,9 +85,3 @@ import Search from "../components/Search";
 // };
 
 // export default Home;
-
-const Home = () => {
-  return <MapScreen />;
-};
-
-export default Home;
