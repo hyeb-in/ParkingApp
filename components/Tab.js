@@ -3,18 +3,21 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MyPage from '../screens/MyPage';
+import MapScreen from './Map';
+
 
 const Tab = createBottomTabNavigator();
 
-function HomeScreen() {
-  return <Text>홈 내용</Text>; //Map.js 넣을 것
+const HomeScreen = () => {
+  return <MapScreen />; //Map.js 넣을 것
 }
 
-function MyPageScreen() {
-  return <Text>마이페이지 내용</Text>; // 이 줄 빼고 마이페이지 화면 구성할 것
+const MyPageScreen = () => {
+  return <MyPage />; // 이 줄 빼고 마이페이지 화면 구성할 것
 }
 
-function BottomTabNavigationApp() {
+const BottomTabNavigationApp = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Home">
