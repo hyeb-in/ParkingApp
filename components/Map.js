@@ -1,8 +1,8 @@
 import styled from "styled-components/native";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ActivityIndicator } from "react-native";
 import { TextInput } from "react-native";
 import Search from "./Search";
@@ -29,6 +29,7 @@ const MapScreen = () => {
   const [longitude, setLongtitude] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [loading, setLoading] = useState(true);
+  const mapViewRef = useRef(null);
 
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -50,6 +51,17 @@ const MapScreen = () => {
       setLoading(false);
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  const showMyCurrentLocation = () => {
+    if (latitude && longitude) {
+      mapViewRef.current.animateToRegion({
+        latitude,
+        longitude,
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.008,
+      });
     }
   };
 
@@ -75,10 +87,11 @@ const MapScreen = () => {
       <>
         <View style={{ flex: 1 }}>
           <MapView
+            ref={mapViewRef}
             style={{ flex: 1, width: "100%", height: "100%" }}
             provider={PROVIDER_GOOGLE}
             customMapStyle={mapStyle}
-            region={{
+            initialRegion={{
               latitude: latitude,
               longitude: longitude,
               latitudeDelta: 0.015,
@@ -94,6 +107,9 @@ const MapScreen = () => {
             /> */}
           </MapView>
           <Search />
+          <TouchableOpacity onPress={showMyCurrentLocation}>
+            <Text>현재위치</Text>
+          </TouchableOpacity>
         </View>
         {console.log(loading, latitude, longitude)}
       </>
