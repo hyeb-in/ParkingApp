@@ -12,15 +12,16 @@ const Search = () => {
   const getParkingLotData = async () => {
     const baseUrl = `http://api.data.go.kr/openapi/tn_pubr_prkplce_info_api`;
 
-    const API_KEY =
-      //인코딩
-      "VG1OYuAFTveEIiNphJmDlXlSYGed9bMGgLaegyaA0dP14%2FSLiDk07RHpY3oVATlh9XAiTEJ%2B11mQBoqcwEy%2F%2BA%3D%3D";
-    // 디코딩 "VG1OYuAFTveEIiNphJmDlXlSYGed9bMGgLaegyaA0dP14/SLiDk07RHpY3oVATlh9XAiTEJ+11mQBoqcwEy/+A==";
+    const API_KEY = process.env.REACT_APP_OPEN_API_KEY;
+    //인코딩 "y%2FnsqEZmvokpv8VoZNZFc%2FsJCvoBOID0ia3cqaDZ8PvSI3NE2WICgaVpItdSbtfaLwVp2mv92VaJ3MkKAIFOMQ%3D%3D";
+    // 디코딩
 
     const params = {
       serviceKey: API_KEY,
-      numOfRows: 10,
+      numOfRows: 1,
       type: "json",
+      // rdnmadr: "",
+      // lnmadr: "경상북도 포항시 남구 해도동15-5",
     };
     console.log(API_KEY);
     const queryString = new URLSearchParams(params).toString();
@@ -30,7 +31,7 @@ const Search = () => {
     try {
       const response = await fetch(requrl);
       const json = await response.json();
-      console.log(json);
+      console.log("데이터", json.response.body.items);
     } catch (e) {
       console.log(e);
     }
