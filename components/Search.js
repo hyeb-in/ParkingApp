@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import { View, TextInput, Text } from "react-native";
 import { useEffect, useState } from "react";
+import { REACT_APP_OPEN_API_KEY } from "@env";
 
 //https://velog.io/@diorjj/fetch%ED%95%A8%EC%88%98%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-get%EC%9A%94%EC%B2%AD%EC%8B%9C-%EC%97%AC%EB%9F%AC%EA%B0%9C%EC%9D%98-params%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%A0%EA%B2%BD%EC%9A%B0-%EC%9A%94%EC%B2%AD%EC%BD%94%EB%93%9C
 //https://reactnative.dev/docs/network
@@ -12,26 +13,36 @@ const Search = () => {
   const getParkingLotData = async () => {
     const baseUrl = `http://api.data.go.kr/openapi/tn_pubr_prkplce_info_api`;
 
-    const API_KEY = process.env.REACT_APP_OPEN_API_KEY;
-    //인코딩 "y%2FnsqEZmvokpv8VoZNZFc%2FsJCvoBOID0ia3cqaDZ8PvSI3NE2WICgaVpItdSbtfaLwVp2mv92VaJ3MkKAIFOMQ%3D%3D";
-    // 디코딩
+    const API_KEY = REACT_APP_OPEN_API_KEY;
 
     const params = {
       serviceKey: API_KEY,
-      numOfRows: 1,
+      numOfRows: 2,
       type: "json",
-      // rdnmadr: "",
-      // lnmadr: "경상북도 포항시 남구 해도동15-5",
+      //lnmadr: ""
+    };
+
+    const paramsRDN = {
+      serviceKey: API_KEY,
+      numOfRows: 10,
+      type: "json",
+      rdnmadr: /"포항"/g,
     };
     console.log(API_KEY);
     const queryString = new URLSearchParams(params).toString();
+    //const queryStringRDN = new URLSearchParams(paramsRDN).toString();
     const requrl = `${baseUrl}?${queryString}`;
-    console.log(requrl);
+    //const reqUrlRND = `${baseUrl}?${queryStringRDN}`;
+    console.log("LN주소", requrl);
+    //console.log(reqUrlRND);
 
     try {
       const response = await fetch(requrl);
-      const json = await response.json();
-      console.log("데이터", json.response.body.items);
+      //const responseRDN = await fetch(reqUrlRND);
+      const json = await responseLN.json();
+      //const jsonRDN = await responseRDN.json();
+      console.log("데이터LN", json.response.body.items);
+      // console.log("데이터RDN", jsonRDN.response.body.items);
     } catch (e) {
       console.log(e);
     }
@@ -49,6 +60,7 @@ const Search = () => {
 
   const submitText = () => {
     setText("");
+    getParkingLotData();
   };
   return (
     <View style={{ position: "absolute", top: 10, width: "100%" }}>
