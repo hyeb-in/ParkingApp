@@ -11,31 +11,33 @@ const Search = () => {
 
     const params = {
       serviceKey: API_KEY,
+      pageNo: 1,
       numOfRows: 2,
       type: "json",
-      //lnmadr: ""
+      lnmadr: "경상북도 포항시 남구 대도동 127-13",
     };
 
     const paramsRDN = {
       serviceKey: API_KEY,
       numOfRows: 10,
       type: "json",
-      //rdnmadr: /"포항"/g,
+      rdnmadr:"포항"
     };
-    console.log(API_KEY);
+
     const queryString = new URLSearchParams(params).toString();
     //const queryStringRDN = new URLSearchParams(paramsRDN).toString();
     const requrl = `${baseUrl}?${queryString}`;
     //const reqUrlRND = `${baseUrl}?${queryStringRDN}`;
-    console.log(requrl);
+    console.log("url", requrl);
     //console.log(reqUrlRND);
 
     try {
       const response = await fetch(requrl);
+      console.log("try 문 안에 url", requrl);
       const json = await response.json();
       console.log("데이터", json.response.body.items);
     } catch (e) {
-      console.log(e);
+      console.log("error", e);
     }
   };
 

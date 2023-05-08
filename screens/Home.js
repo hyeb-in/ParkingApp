@@ -7,6 +7,7 @@ import { ActivityIndicator } from "react-native";
 import { TextInput } from "react-native";
 import MapScreen from "../components/Map";
 import Search from "../components/Search";
+import { NavigationContainer } from "@react-navigation/native";
 import BottomTabNavigationApp from "../components/Tab";
 
 const Home = () => {
