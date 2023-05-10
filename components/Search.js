@@ -1,50 +1,41 @@
 import styled from "styled-components/native";
 import { View, TextInput, Text } from "react-native";
+import database, { firebase } from "@react-native-firebase/database";
 import { useEffect, useState } from "react";
 import { REACT_APP_OPEN_API_KEY } from "@env";
+import Fuse from "fuse.js";
 
 const Search = () => {
+  const [text, setText] = useState("");
+
   const getParkingLotData = async () => {
-    const baseUrl = `http://api.data.go.kr/openapi/tn_pubr_prkplce_info_api`;
+    const database = firebase.database().ref("records");
 
-    const API_KEY = REACT_APP_OPEN_API_KEY;
+    database.on("value", (snapshot) => {
+      const data = snapshot.val();
 
-    const params = {
-      serviceKey: API_KEY,
-      pageNo: 1,
-      numOfRows: 2,
-      type: "json",
-      lnmadr: "경상북도 포항시 남구 대도동 127-13",
-    };
+      const indexData = Object.keys(data).map((key) => ({
+        id: key,
+        address: data[key].address,
+      }));
+      const query = text;
 
-    const paramsRDN = {
-      serviceKey: API_KEY,
-      numOfRows: 10,
-      type: "json",
-      rdnmadr:"포항"
-    };
+      const options = {
+        keys: ["address"],
+        threshold: 1,
+        minMatchCharLength: query.length,
+      };
 
-    const queryString = new URLSearchParams(params).toString();
-    //const queryStringRDN = new URLSearchParams(paramsRDN).toString();
-    const requrl = `${baseUrl}?${queryString}`;
-    //const reqUrlRND = `${baseUrl}?${queryStringRDN}`;
-    console.log("url", requrl);
-    //console.log(reqUrlRND);
-
-    try {
-      const response = await fetch(requrl);
-      console.log("try 문 안에 url", requrl);
-      const json = await response.json();
-      console.log("데이터", json.response.body.items);
-    } catch (e) {
-      console.log("error", e);
-    }
+      const fuse = new Fuse(indexData, options);
+      const results = fuse.search(query);
+      console.log(query.length);
+      console.log(results);
+    });
   };
 
   useEffect(() => {
     getParkingLotData();
   }, []);
-  const [text, setText] = useState("");
 
   const onChangeText = (content) => {
     console.log(content);
