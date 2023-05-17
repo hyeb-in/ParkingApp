@@ -11,35 +11,11 @@ const Search = (props) => {
   const getParkingLotData = () => {
     SearchList(text);
     navigation.navigate("Stack", { screen: "SearchList" });
-    // const database =  firebase.database().ref("records");
-
-    // database.on("value", (snapshot) => {
-    //   const data = snapshot.val();
-
-    //   const indexData = Object.keys(data).map((key) => ({
-    //     id: key,
-    //     roadadr: data[key].roadadr,
-    //     numadr: data[key].numadr,
-    //   }));
-
-    //   const query = text;
-
-    //   const options = {
-    //     keys: ["roadadr", "numadr"],
-    //     threshold: 0.9,
-    //     minMatchCharLength: query.length,
-    //   };
-
-    //   const fuse = new Fuse(indexData, options);
-    //   const results = fuse.search(query);
-    //   console.log(query.length);
-    //   console.log(results);
-    // });
   };
 
-  useEffect(() => {
-    getParkingLotData();
-  }, []);
+  // useEffect(() => {
+  //   getParkingLotData();
+  // }, []);
 
   const onChangeText = (content) => {
     console.log(content);
@@ -48,14 +24,17 @@ const Search = (props) => {
 
   const submitText = () => {
     setText("");
-    getParkingLotData();
+    navigation.navigate("Stack", {
+      screen: "SearchList",
+      params: { searchText: text },
+    });
   };
   return (
     // <View style={{ position: "absolute", top: 10, width: "100%" }}>
     <TextInput
       style={{
         borderRadius: 10,
-        marginTop: 10,
+        marginTop: 30,
         marginLeft: 10,
         marginRight: 10,
         color: "#000",
@@ -70,7 +49,7 @@ const Search = (props) => {
       placeholderTextColor={"#666"}
       onChangeText={onChangeText}
       value={text}
-      onSubmitEditing={getParkingLotData}
+      onSubmitEditing={submitText}
     />
     //    </View>
   );

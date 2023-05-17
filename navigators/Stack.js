@@ -7,8 +7,12 @@ const NativeStack = createNativeStackNavigator();
 
 const Stack = () => (
   <NativeStack.Navigator>
-    <NativeStack.Screen name="Test" component={Test} />
-    <NativeStack.Screen name="SearchList" component={SearchList} />
+    {/* <NativeStack.Screen name="Test" component={Test} /> */}
+    <NativeStack.Screen
+      name="SearchList"
+      component={SearchList}
+      options={{ title: " ", headerTransparent: true }}
+    />
   </NativeStack.Navigator>
 );
 

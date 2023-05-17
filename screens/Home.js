@@ -16,7 +16,7 @@ const Home = ({ navigation }) => {
         {/* <TextInput
           style={{
             borderRadius: 10,
-            marginTop: 10,
+            marginTop: 30,
             marginLeft: 10,
             marginRight: 10,
             color: "#000",
@@ -32,7 +32,7 @@ const Home = ({ navigation }) => {
           // onChangeText={onChangeText}
           // value={text}
           onSubmitEditing={() =>
-            navigation.navigate("Stack", { screen: "Test" })
+            navigation.navigate("Stack", { screen: "SerachList" })
           }
         /> */}
       </View>

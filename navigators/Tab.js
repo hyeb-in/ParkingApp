@@ -8,14 +8,20 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   return (
-    <Tab.Navigator initialRouteName="Home">
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarLabelPosition: "beside-icon",
+        tabBarHideOnKeyboard: true,
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
           title: "홈",
           headerShown: false,
-          tabBarLabelPosition: "beside-icon",
+
           tabBarIcon: ({ color, size }) => (
             <Icon name="home" color={color} size={size} />
           ),
@@ -28,7 +34,7 @@ const Tabs = () => {
         options={{
           title: "마이 페이지",
           //headerShown: false,
-          tabBarLabelPosition: "beside-icon",
+
           tabBarIcon: ({ color, size }) => (
             <Icon name="person" color={color} size={size} />
           ),
