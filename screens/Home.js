@@ -11,9 +11,9 @@ const Home = ({ navigation }) => {
       {/* Map에 Properties로 latitud,longtitude 넘겨야할 것 같음. 그래야지 loading 일괄적으로 가능능 */}
       {/* search.js는 그냥 Home.js에 구현해야할 것 같음.  */}
       <Map />
-      <View style={{ position: "absolute", top: 10, width: "100%" }}>
-        <Search navigation={navigation} />
-        {/* <TextInput
+      {/* <View style={{ position: "absolute", top: 10, width: "100%" }}> */}
+      <Search navigation={navigation} />
+      {/* <TextInput
           style={{
             borderRadius: 10,
             marginTop: 30,
@@ -35,7 +35,7 @@ const Home = ({ navigation }) => {
             navigation.navigate("Stack", { screen: "SerachList" })
           }
         /> */}
-      </View>
+      {/* </View> */}
       <StatusBar style={{ color: "black" }} />
     </View>
   );
