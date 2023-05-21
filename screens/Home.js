@@ -1,87 +1,44 @@
-import styled from "styled-components/native";
-import { View } from "react-native";
-import * as Location from "expo-location";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native";
-import { TextInput } from "react-native";
-import MapScreen from "../components/Map";
-import Search from "../components/Search";
-import BottomTabNavigationApp from "../components/Tab";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
-const Home = () => {
-  return <BottomTabNavigationApp />;
+import React, { useEffect, useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import Map from "../components/Map";
+import Search from "../components/Search";
+
+const Home = ({ navigation }) => {
+  return (
+    <View style={{ flex: 1 }}>
+      {/* Map에 Properties로 latitud,longtitude 넘겨야할 것 같음. 그래야지 loading 일괄적으로 가능능 */}
+      {/* search.js는 그냥 Home.js에 구현해야할 것 같음.  */}
+      <Map />
+      {/* <View style={{ position: "absolute", top: 10, width: "100%" }}> */}
+      <Search navigation={navigation} />
+      {/* <TextInput
+          style={{
+            borderRadius: 10,
+            marginTop: 30,
+            marginLeft: 10,
+            marginRight: 10,
+            color: "#000",
+            borderColor: "#666",
+            backgroundColor: "#FFF",
+            borderWidth: 1,
+            height: 45,
+            paddingHorizontal: 10,
+            fontSize: 18,
+          }}
+          placeholder={"Search"}
+          placeholderTextColor={"#666"}
+          // onChangeText={onChangeText}
+          // value={text}
+          onSubmitEditing={() =>
+            navigation.navigate("Stack", { screen: "SerachList" })
+          }
+        /> */}
+      {/* </View> */}
+      <StatusBar style={{ color: "black" }} />
+    </View>
+  );
 };
 
 export default Home;
-
-// const Container = styled.View``;
-// const Text = styled.Text``;
-// const Btn = styled.TouchableOpacity``;
-// const BtnText = styled.Text``;
-
-// // const logOut = () => {
-// //   auth().signOut();
-// // };
-
-// const Home = () => {
-//   const [latitude, setLatitude] = useState(null);
-//   const [longitude, setLongtitude] = useState(null);
-//   const [errorMsg, setErrorMsg] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const getLocation = async () => {
-//     let { status } = await Location.requestForegroundPermissionsAsync();
-
-//     if (status !== "granted") {
-//       setErrorMsg("Permission to access location was denied");
-//       return;
-//     }
-
-//     try {
-//       let {
-//         coords: { latitude, longitude },
-//       } = await Location.getCurrentPositionAsync();
-
-//       setLatitude(latitude);
-//       setLongtitude(longitude);
-//       setLoading(false);
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-
-//   useEffect(() => {
-//     getLocation();
-//   }, []);
-
-//   return (
-//     <View style={{ flex: 1 }}>
-//       {loading ? (
-//         <ActivityIndicator
-//           size="large"
-//           color="black"
-//           style={{ marginTop: 350 }}
-//         />
-//       ) : (
-//         <>
-//           <View style={{ marginTop: 30 }}>
-//             <TextInput />
-//           </View>
-//           <MapView
-//             style={{ flex: 5 }}
-//             provider={PROVIDER_GOOGLE}
-//             initialRegion={{
-//               latitude: latitude,
-//               longitude: longitude,
-//               latitudeDelta: 0.0922,
-//               longitudeDelta: 0.0421,
-//             }}
-//           />
-//         </>
-//       )}
-//       {console.log(loading, latitude, longitude)}
-//     </View>
-//   );
-// };
-
-// export default Home;
