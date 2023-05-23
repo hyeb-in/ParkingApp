@@ -2,7 +2,6 @@ import { View, Text, FlatList } from "react-native";
 import { ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import Fuse from "fuse.js";
-import { databaseRef } from "../firebase/realtimedb";
 
 const SearchList = ({ route }) => {
   const [loading, setLoading] = useState(true);

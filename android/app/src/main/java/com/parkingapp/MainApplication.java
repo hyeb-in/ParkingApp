@@ -17,6 +17,10 @@ import expo.modules.ReactNativeHostWrapper;
 
 import java.util.List;
 
+// 21 : Expo Firebase 연결 시도
+import io.invertase.firebase.app.ReactNativeFirebaseAppPackage; 
+
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -32,6 +36,10 @@ public class MainApplication extends Application implements ReactApplication {
         List<ReactPackage> packages = new PackageList(this).getPackages();
         // Packages that cannot be autolinked yet can be added manually here, for example:
         // packages.add(new MyReactNativePackage());
+
+        // 40~41: Expo Firebase 연결 시도
+        packages.add(new ReactNativeFirebaseAppPackage());
+        packages.add(new MainReactPackage());
         return packages;
       }
 
