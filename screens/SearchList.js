@@ -30,7 +30,7 @@ const SearchList = ({ route }) => {
         id: key,
         roadadr: data[key].roadadr, //도로명지번주소
         numadr: data[key].numadr, //소재지지번주소
-        address: data[key].address,
+        address_name: data[key].address_name,
         prkplceNm: data[key].prkplceNm, //주차장 이름
       }));
 
@@ -41,7 +41,7 @@ const SearchList = ({ route }) => {
       //threshold 유사도 (0~1)
       // minMatchCharLength 최소로 일치해야할 단어 수 (검색어랑 길이 다르면 이상한 거까지 나와서 걍 검색어 수로 맞춰두면 될 듯)
       const options = {
-        keys: ["address"],
+        keys: ["address_name"],
         threshold: 0.7,
         minMatchCharLength: query.length,
       };

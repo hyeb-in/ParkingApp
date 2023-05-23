@@ -4,7 +4,7 @@ import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import React, { useEffect, useState, useRef } from "react";
 import { ActivityIndicator } from "react-native";
-import Search from "./Search";
+import { REACT_APP_OPEN_API_KEY } from "@env";
 
 const Text = styled.Text``;
 
@@ -25,7 +25,35 @@ const Map = () => {
   const [longitude, setLongtitude] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [parkingInfo, setParkingInfo] = useState();
+
   const mapViewRef = useRef(null);
+
+  const API_KEY = REACT_APP_OPEN_API_KEY;
+
+  const getMarker = async () => {
+    const baseUrl = `http://api.data.go.kr/openapi/tn_pubr_prkplce_info_api`;
+
+    const params = {
+      serviceKey: API_KEY,
+
+      numOfRows: 1000,
+      type: "json",
+    };
+
+    const queryString = new URLSearchParams(params).toString();
+    const reqUrl = `${baseUrl}?${queryString}`;
+
+    try {
+      const response = await fetch(reqUrl);
+      const json = await response.json();
+      const result = json.response.body.items;
+      setParkingInfo(result);
+      //console.log("데이터", result);
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
 
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -63,6 +91,7 @@ const Map = () => {
 
   useEffect(() => {
     getLocation();
+    getMarker();
   }, []);
 
   if (loading) {
@@ -91,6 +120,19 @@ const Map = () => {
           }}
           showsUserLocation={true}
         >
+          {/* {parkingInfo &&
+            parkingInfo.map((item, index) => (
+              <Marker
+                kdy={index}
+                coordinate={{
+                  latitude: item.latitude,
+                  longitude: item.longitude,
+                }}
+                title="this is a marker"
+                description="this is a marker example"
+              />
+            ))} */}
+
           {/* 아래는 마커 코드 latitude, longitude이용해서 위치 하면 될 듯,, */}
           {/* <Marker
               coordinate={{ latitude, longitude }}
