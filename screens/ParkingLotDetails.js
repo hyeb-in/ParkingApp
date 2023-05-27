@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
-import database, { firebase } from "@react-native-firebase/database";
-import { useEffect, useState } from "react";
+import { firebase } from "@react-native-firebase/database";
 import { databaseRef } from "../firebase/realtimedb";
+import Gpio from '../components/Gpio';
 
-const ParkingLotDetails = ({route}) => {
+const ParkingLotDetails = ({ route }) => {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
+  const [occupiedSeats, setOccupiedSeats] = useState(0);
+
   const parkingLotId = route.params;
   const database = firebase.database().ref(`records/${parkingLotId}`);
 
   useEffect(() => {
     getParkingLotData();
   }, []);
-  //realtime database, /records url에서 가져오기
+
   const getParkingLotData = async () => {
     try {
       const snapshot = await databaseRef
@@ -28,36 +30,32 @@ const ParkingLotDetails = ({route}) => {
     }
   };
 
+  const handleOccupiedSeatsChange = (newOccupiedSeats) => {
+    setOccupiedSeats(Math.max(newOccupiedSeats, 0));
+  };
 
-  // 클릭 이벤트를 텍스트에 적용하고 눌렸을 때는 추가적으로 정보를 더 볼 수 있도록 하기(기본값을 false)
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>{result.prkplceNm}<Text style={styles.small}>   {result.prkplceSe}</Text></Text>
-        <Text style={styles.description}>{result.address_name}</Text>
-        <Text style={styles.description}>{`운영요일: ${result.operDay}`}</Text>
-        <Text style={styles.description}>{`운영시간: ${result.weekdayOperOpenHhmm} - ${result.weekdayOperColseHhmm}`}</Text>
-        <Text style={styles.description}>{`주차구획수: ${result.prkcmprt}`}</Text>
-        <View style={styles.table}>
-        {/* Table Body */}
-
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{result.prkplceNm}<Text style={styles.small}>   {result.prkplceSe}</Text></Text>
+      <Text style={styles.description}>{result.address_name}</Text>
+      <Text style={styles.description}>{`운영요일: ${result.operDay}`}</Text>
+      <Text style={styles.description}>{`운영시간: ${result.weekdayOperOpenHhmm} - ${result.weekdayOperColseHhmm}`}</Text>
+      <Text style={styles.description}>{`잔여: ${Math.max(result.prkcmprt - occupiedSeats, 0)}석/${result.prkcmprt}석`}</Text>
+      <View style={styles.table}>
         <View style={styles.tableRowTop}>
           <Text style={styles.tableCell}>요금 안내</Text>
           <Text style={styles.tableCell}>기본 시간</Text>
           <Text style={styles.tableCell}>기본 요금</Text>
         </View>
-
         <View style={styles.tableRow}>
           <Text style={styles.tableCell}></Text>
           <Text style={styles.tableCell}>{`${result.basicTime}시간`}</Text>
           <Text style={styles.tableCell}>{`${result.basicCharge}원`}</Text>
         </View>
-
       </View>
-      
-      </View>
-    );
-
-
+      <Gpio onOccupiedSeatsChange={handleOccupiedSeatsChange} />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
