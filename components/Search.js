@@ -5,7 +5,7 @@ import { Picker } from "@react-native-picker/picker";
 const Search = (props) => {
   const { navigation } = props;
   const [text, setText] = useState("");
-  const [region, setRegion] = useState("서울");
+  const [region, setRegion] = useState("서울특별시");
   console.log("region :", region);
   // const getParkingLotData = () => {
   //   SearchList(text);
@@ -25,6 +25,7 @@ const Search = (props) => {
     setText("");
     navigation.navigate("Stack", {
       screen: "SearchList",
+      //params: { text, region, navigation }, // 수정함
       params: { text, region },
     });
   };

@@ -1,14 +1,21 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import Fuse from "fuse.js";
 import { databaseRef } from "../firebase/realtimedb";
+//import ParkingLotDetails from "./ParkingLotDetails"; // 이게 상세정보 페이지
+//import Stack from "../navigators/Stack";
+//import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+
+//const NativeStack = createNativeStackNavigator();
 
 const SearchList = ({ route }) => {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
-
+  //const { text, region, navigation } = route.params;
   const { text, region } = route.params;
+  const navigation = useNavigation();
 
   console.log("지역", region);
   // 아래 코드는 데이터 베이스 코드 (파이어베이스 용량 제한 때문에 )
@@ -53,6 +60,7 @@ const SearchList = ({ route }) => {
       // console.log(results);
       setResult(results);
       console.log("결과", result);
+      console.log("테스트용 출력: ", data[0].prkplceNm);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -60,12 +68,31 @@ const SearchList = ({ route }) => {
     }
   };
 
+  const pressHandler = (prkplceNm, id, navigation) => {
+    // 클릭 이벤트 핸들러
+    console.log(navigation); // undefined
+    if (navigation) {
+      // 이게 안됨
+      console.log("주차장명 = ", prkplceNm, ", id = ", id);
+      navigation.navigate("Stack", {
+        screen: "ParkingLotDetails",
+        params: id,
+      });
+    }
+  };
+
   // Define the renderItem function to render each item
   const renderItem = ({ item }) => {
     return (
-      <View style={{ marginTop: 10 }}>
-        <Text style={{ fontSize: 20 }}>{item.item.prkplceNm}</Text>
-      </View>
+      <TouchableOpacity
+        onPress={() =>
+          pressHandler(item.item.prkplceNm, item.item.id, navigation)
+        }
+      >
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ fontSize: 20 }}>{item.item.prkplceNm}</Text>
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -84,35 +111,5 @@ const SearchList = ({ route }) => {
     />
   );
 };
-
-//   //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-//   // const text = route.params.searchText;
-//   // const data = [
-//   //   { id: "1", name: "Item 1" },
-//   //   { id: "2", name: "Item 2" },
-//   //   { id: "3", name: "Item 3" },
-//   //   { id: "4", name: text },
-//   //   // Add more items as needed
-//   // ];
-
-//   // // Define the renderItem function to render each item
-//   // const renderItem = ({ item }) => {
-//   //   return (
-//   //     <View>
-//   //       <Text>{item.name}</Text>
-//   //     </View>
-//   //   );
-//   // };
-
-//   // return (
-//   //   <SafeAreaView style={{ marginTop: 50 }}>
-//   //     <FlatList
-//   //       data={data}
-//   //       renderItem={renderItem}
-//   //       keyExtractor={(item) => item.id}
-//   //     />
-//   //   </SafeAreaView>
-//   // );
-// };
 
 export default SearchList;
