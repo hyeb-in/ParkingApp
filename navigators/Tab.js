@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import MyPage from "../screens/MyPage";
 import Home from "../screens/Home";
+import ParkingLotDetails from "../screens/ParkingLotDetails"; // 테스트용
 
 const Tab = createBottomTabNavigator();
 
@@ -29,8 +30,7 @@ const Tabs = () => {
       />
       <Tab.Screen
         name="MyPage"
-        a
-        component={MyPage}
+        component={ParkingLotDetails}
         options={{
           title: "마이 페이지",
           //headerShown: false,

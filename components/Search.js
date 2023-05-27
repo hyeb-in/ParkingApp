@@ -6,16 +6,6 @@ const Search = (props) => {
   const { navigation } = props;
   const [text, setText] = useState("");
   const [region, setRegion] = useState("");
-
-  // const getParkingLotData = () => {
-  //   SearchList(text);
-  //   navigation.navigate("Stack", { screen: "SearchList" });
-  // };
-
-  // useEffect(() => {
-  //   getParkingLotData();
-  // }, []);
-
   const onChangeText = (content) => {
     console.log(content);
     setText(content);
@@ -25,6 +15,7 @@ const Search = (props) => {
     setText("");
     navigation.navigate("Stack", {
       screen: "SearchList",
+      //params: { text, region, navigation }, // 수정함
       params: { text, region },
     });
   };

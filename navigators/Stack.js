@@ -1,6 +1,7 @@
 import React, { TouchableOpacity, Text, View } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SearchList from "../screens/SearchList";
+import ParkingLotDetails from "../screens/ParkingLotDetails";
 import Test from "../screens/Test";
 
 const NativeStack = createNativeStackNavigator();
@@ -11,6 +12,11 @@ const Stack = () => (
     <NativeStack.Screen
       name="SearchList"
       component={SearchList}
+      options={{ title: " ", headerTransparent: true }}
+    />
+    <NativeStack.Screen
+      name="ParkingLotDetails"
+      component={ParkingLotDetails}
       options={{ title: " ", headerTransparent: true }}
     />
   </NativeStack.Navigator>
