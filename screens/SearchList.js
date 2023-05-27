@@ -20,7 +20,7 @@ const SearchList = ({ route }) => {
     try {
       const snapshot = await databaseRef
         .child("records")
-        .orderByChild("roadadr")
+        .orderByChild("address_name")
         .startAt(region)
         .endAt(region + "\uf8ff'")
         .once("value");
@@ -28,8 +28,8 @@ const SearchList = ({ route }) => {
 
       const indexData = Object.keys(data).map((key) => ({
         id: key,
-        roadadr: data[key].roadadr, //도로명지번주소
-        numadr: data[key].numadr, //소재지지번주소
+        // roadadr: data[key].roadadr, //도로명지번주소
+        // numadr: data[key].numadr, //소재지지번주소
         address_name: data[key].address_name,
         prkplceNm: data[key].prkplceNm, //주차장 이름
       }));
