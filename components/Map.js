@@ -157,8 +157,10 @@ const Map = () => {
           provider={PROVIDER_GOOGLE}
           customMapStyle={mapStyle}
           initialRegion={{
-            latitude,
-            longitude,
+            latitude: 37.5826,
+            longitude: 127.0101,
+            // latitude
+            // longitude
             // latitudeDelta: 0.02,
             // longitudeDelta: 0.006,
             latitudeDelta: 0.015,

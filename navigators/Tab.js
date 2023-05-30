@@ -40,8 +40,10 @@ const Tabs = () => {
       <Tab.Screen
         name="MyPage"
         component={
-          islogin ? MyPage : Login
-          //  ParkingLotDetails
+          islogin
+            ? MyPage
+            : //Login
+              ParkingLotDetails
         }
         options={{
           title: "마이 페이지",

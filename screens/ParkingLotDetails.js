@@ -8,12 +8,18 @@ import {
   TextInput,
 } from "react-native";
 import { useEffect, useState } from "react";
+import database from "@react-native-firebase/database";
 import { databaseRef } from "../firebase/realtimedb";
+import { reverseGeocodeAsync } from "expo-location";
+import Gpio from "../components/Gpio";
 
 const ParkingLotDetails = ({ route }) => {
-  const [reviewText, setReviewText] = useState("");
+  const [newReview, setNewReview] = useState("");
+  const [review, setReview] = useState([]);
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
+  const [occupiedSeats, setOccupiedSeats] = useState(0);
+
   const parkingLotId = 7250; //나중에 변수로 바꾸기
   //route.params;
 
@@ -35,6 +41,28 @@ const ParkingLotDetails = ({ route }) => {
     }
   };
 
+  const saveReview = () => {
+    const reviewRef = database().ref("reviews");
+    const newReviewRef = reviewRef.push();
+    newReviewRef
+      .set({ text: newReview })
+      .then(() => {
+        console.log("Review saved successfully!");
+        setNewReview("");
+      })
+      .catch((error) => {
+        console.log("Error saving review:", error);
+      });
+  };
+
+  const handleOccupiedSeatsChange = (newOccupiedSeats) => {
+    setOccupiedSeats(Math.max(newOccupiedSeats, 0));
+  };
+
+  const submitReview = () => {
+    saveReview();
+  };
+
   // 클릭 이벤트를 텍스트에 적용하고 눌렸을 때는 추가적으로 정보를 더 볼 수 있도록 하기(기본값을 false)
   if (loading) {
     return <ActivityIndicator style={{ marginTop: 30 }} />;
@@ -50,7 +78,11 @@ const ParkingLotDetails = ({ route }) => {
       <Text
         style={styles.description}
       >{`운영시간: ${result.weekdayOperOpenHhmm} - ${result.weekdayOperColseHhmm}`}</Text>
-      <Text style={styles.description}>{`주차구획수: ${result.prkcmprt}`}</Text>
+      <Text style={styles.description}>{`잔여: ${Math.max(
+        result.prkcmprt - occupiedSeats,
+        0
+      )}석/${result.prkcmprt}석`}</Text>
+      {/* <Text style={styles.description}>{`주차구획수: ${result.prkcmprt}`}</Text> */}
       <View style={styles.table}>
         {/* Table Body */}
 
@@ -65,6 +97,8 @@ const ParkingLotDetails = ({ route }) => {
           <Text style={styles.tableCell}>{`${result.basicTime}시간`}</Text>
           <Text style={styles.tableCell}>{`${result.basicCharge}원`}</Text>
         </View>
+
+        <Gpio onOccupiedSeatsChange={handleOccupiedSeatsChange} />
       </View>
       <TextInput
         style={{
@@ -80,9 +114,9 @@ const ParkingLotDetails = ({ route }) => {
         }}
         placeholder={"리뷰 남기기"}
         placeholderTextColor={"#666"}
-        // onChangeText={onChangeText}
-        // value={text}
-        // onSubmitEditing={submitText}
+        onChangeText={(text) => setNewReview(text)}
+        value={newReview}
+        onSubmitEditing={submitReview}
       />
     </View>
   );

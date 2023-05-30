@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
 import { ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import Fuse from "fuse.js";
@@ -92,6 +92,11 @@ const SearchList = ({ route }) => {
   };
 
   if (loading) {
+    // return (
+    //   <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    //     <Image source={require("../ddot.png")} style={{ marginTop: 30 }} />
+    //   </View>
+    // );
     return <ActivityIndicator style={{ marginTop: 30 }} />;
   }
 
