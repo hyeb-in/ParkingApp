@@ -5,6 +5,7 @@ import MyPage from "../screens/MyPage";
 import Home from "../screens/Home";
 import auth from "@react-native-firebase/auth";
 import Login from "../screens/Login";
+import ParkingLotDetails from "../screens/ParkingLotDetails";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +39,10 @@ const Tabs = () => {
       />
       <Tab.Screen
         name="MyPage"
-        component={islogin ? MyPage : Login}
+        component={
+          islogin ? MyPage : Login
+          //  ParkingLotDetails
+        }
         options={{
           title: "마이 페이지",
           //headerShown: false,

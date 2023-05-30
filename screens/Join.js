@@ -1,11 +1,13 @@
 import React, { useReducer, useRef, useState } from "react";
 import auth from "@react-native-firebase/auth";
-import { ActivityIndicator, Alert, TextInput } from "react-native";
-import styled from "styled-components/native";
-
-const Container = styled.View``;
-const Btn = styled.TouchableOpacity``;
-const BtnText = styled.Text``;
+import {
+  ActivityIndicator,
+  Alert,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 
 const Join = () => {
   const passwordInput = useRef();
@@ -37,7 +39,7 @@ const Join = () => {
   };
 
   return (
-    <Container>
+    <View>
       {/* 이메일 */}
       <TextInput
         placeholder="Email"
@@ -69,10 +71,10 @@ const Join = () => {
         onChangeText={(text) => setConfirmPassword(text)}
         onSubmitEditing={joinSubmit}
       />
-      <Btn onPress={joinSubmit}>
-        {isLoading ? <ActivityIndicator /> : <BtnText> 회원가입 </BtnText>}
-      </Btn>
-    </Container>
+      <TouchableOpacity onPress={joinSubmit}>
+        {isLoading ? <ActivityIndicator /> : <Text> 회원가입 </Text>}
+      </TouchableOpacity>
+    </View>
   );
 };
 

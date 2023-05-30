@@ -1,5 +1,4 @@
-import styled from "styled-components/native";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import React, { useEffect, useState, useRef } from "react";
@@ -7,8 +6,6 @@ import { ActivityIndicator } from "react-native";
 import { REACT_APP_OPEN_API_KEY } from "@env";
 import { databaseRef } from "../firebase/realtimedb";
 import Fuse from "fuse.js";
-
-const Text = styled.Text``;
 
 const mapStyle = [
   {
@@ -63,7 +60,6 @@ const Map = () => {
 
     try {
       const snapshot = await databaseRef
-        .child("records")
         .orderByChild("address_name")
         .startAt(markerRegion)
         .endAt(markerRegion + "\uf8ff'")

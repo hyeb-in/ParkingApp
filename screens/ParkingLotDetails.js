@@ -5,15 +5,17 @@ import {
   StyleSheet,
   ActivityIndicator,
   FlatList,
+  TextInput,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { databaseRef } from "../firebase/realtimedb";
 
 const ParkingLotDetails = ({ route }) => {
+  const [reviewText, setReviewText] = useState("");
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
-  const parkingLotId = route.params;
-  //const database = firebase.database().ref(`records/${parkingLotId}`);
+  const parkingLotId = 7250; //나중에 변수로 바꾸기
+  //route.params;
 
   useEffect(() => {
     getParkingLotData();
@@ -64,6 +66,24 @@ const ParkingLotDetails = ({ route }) => {
           <Text style={styles.tableCell}>{`${result.basicCharge}원`}</Text>
         </View>
       </View>
+      <TextInput
+        style={{
+          borderRadius: 5,
+          color: "#000",
+          borderColor: "#666",
+          backgroundColor: "#FFF",
+          borderWidth: 1,
+          height: 45,
+          paddingHorizontal: 10,
+          fontSize: 18,
+          width: 300,
+        }}
+        placeholder={"리뷰 남기기"}
+        placeholderTextColor={"#666"}
+        // onChangeText={onChangeText}
+        // value={text}
+        // onSubmitEditing={submitText}
+      />
     </View>
   );
 };

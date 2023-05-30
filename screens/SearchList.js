@@ -83,6 +83,7 @@ const SearchList = ({ route }) => {
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => pressHandler(item.item.id, navigation)}>
+        {console.log(item.item.id)}
         <View style={{ marginTop: 10 }}>
           <Text style={{ fontSize: 20 }}>{item.item.prkplceNm}</Text>
         </View>
