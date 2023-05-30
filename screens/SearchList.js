@@ -26,7 +26,6 @@ const SearchList = ({ route }) => {
   const getParkingLotData = async () => {
     try {
       const snapshot = await databaseRef
-        .child("records")
         .orderByChild("address_name")
         .startAt(region)
         .endAt(region + "\uf8ff'")
@@ -59,8 +58,7 @@ const SearchList = ({ route }) => {
       // console.log(query.length);
       // console.log(results);
       setResult(results);
-      console.log("결과", result);
-      console.log("테스트용 출력: ", data[0].prkplceNm);
+
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -68,12 +66,12 @@ const SearchList = ({ route }) => {
     }
   };
 
-  const pressHandler = (prkplceNm, id, navigation) => {
+  const pressHandler = (id, navigation) => {
     // 클릭 이벤트 핸들러
-    console.log(navigation); // undefined
+    //console.log(navigation); // undefined
     if (navigation) {
       // 이게 안됨
-      console.log("주차장명 = ", prkplceNm, ", id = ", id);
+      //console.log("주차장명 = ", prkplceNm, ", id = ", id);
       navigation.navigate("Stack", {
         screen: "ParkingLotDetails",
         params: id,
@@ -84,11 +82,7 @@ const SearchList = ({ route }) => {
   // Define the renderItem function to render each item
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity
-        onPress={() =>
-          pressHandler(item.item.prkplceNm, item.item.id, navigation)
-        }
-      >
+      <TouchableOpacity onPress={() => pressHandler(item.item.id, navigation)}>
         <View style={{ marginTop: 10 }}>
           <Text style={{ fontSize: 20 }}>{item.item.prkplceNm}</Text>
         </View>

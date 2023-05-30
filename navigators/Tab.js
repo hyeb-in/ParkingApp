@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import MyPage from "../screens/MyPage";
 import Home from "../screens/Home";
-import ParkingLotDetails from "../screens/ParkingLotDetails"; // 테스트용
+import auth from "@react-native-firebase/auth";
+import Login from "../screens/Login";
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
+  const [islogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      setIsLogin(!!user);
+    }, []);
+  });
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -30,7 +38,7 @@ const Tabs = () => {
       />
       <Tab.Screen
         name="MyPage"
-        component={ParkingLotDetails}
+        component={islogin ? MyPage : Login}
         options={{
           title: "마이 페이지",
           //headerShown: false,

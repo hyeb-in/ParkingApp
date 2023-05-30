@@ -1,14 +1,19 @@
-import React from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
-import database, { firebase } from "@react-native-firebase/database";
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 import { useEffect, useState } from "react";
 import { databaseRef } from "../firebase/realtimedb";
 
-const ParkingLotDetails = ({route}) => {
+const ParkingLotDetails = ({ route }) => {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
   const parkingLotId = route.params;
-  const database = firebase.database().ref(`records/${parkingLotId}`);
+  //const database = firebase.database().ref(`records/${parkingLotId}`);
 
   useEffect(() => {
     getParkingLotData();
@@ -17,7 +22,7 @@ const ParkingLotDetails = ({route}) => {
   const getParkingLotData = async () => {
     try {
       const snapshot = await databaseRef
-        .child(`records/${parkingLotId}`)
+        .child(`/${parkingLotId}`)
         .once("value");
       const data = snapshot.val();
       setResult(data);
@@ -28,16 +33,23 @@ const ParkingLotDetails = ({route}) => {
     }
   };
 
-
   // 클릭 이벤트를 텍스트에 적용하고 눌렸을 때는 추가적으로 정보를 더 볼 수 있도록 하기(기본값을 false)
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>{result.prkplceNm}<Text style={styles.small}>   {result.prkplceSe}</Text></Text>
-        <Text style={styles.description}>{result.address_name}</Text>
-        <Text style={styles.description}>{`운영요일: ${result.operDay}`}</Text>
-        <Text style={styles.description}>{`운영시간: ${result.weekdayOperOpenHhmm} - ${result.weekdayOperColseHhmm}`}</Text>
-        <Text style={styles.description}>{`주차구획수: ${result.prkcmprt}`}</Text>
-        <View style={styles.table}>
+  if (loading) {
+    return <ActivityIndicator style={{ marginTop: 30 }} />;
+  }
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>
+        {result.prkplceNm}
+        <Text style={styles.small}> {result.prkplceSe}</Text>
+      </Text>
+      <Text style={styles.description}>{result.address_name}</Text>
+      <Text style={styles.description}>{`운영요일: ${result.operDay}`}</Text>
+      <Text
+        style={styles.description}
+      >{`운영시간: ${result.weekdayOperOpenHhmm} - ${result.weekdayOperColseHhmm}`}</Text>
+      <Text style={styles.description}>{`주차구획수: ${result.prkcmprt}`}</Text>
+      <View style={styles.table}>
         {/* Table Body */}
 
         <View style={styles.tableRowTop}>
@@ -51,13 +63,9 @@ const ParkingLotDetails = ({route}) => {
           <Text style={styles.tableCell}>{`${result.basicTime}시간`}</Text>
           <Text style={styles.tableCell}>{`${result.basicCharge}원`}</Text>
         </View>
-
       </View>
-      
-      </View>
-    );
-
-
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -67,14 +75,14 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
     marginBottom: 16,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom:8,
+    fontWeight: "bold",
+    marginBottom: 8,
   },
   description: {
     fontSize: 16,
@@ -83,7 +91,7 @@ const styles = StyleSheet.create({
   description_right: {
     fontSize: 16,
     marginBottom: 16,
-    textAlign: 'right',
+    textAlign: "right",
   },
   review: {
     fontSize: 16,
@@ -92,30 +100,30 @@ const styles = StyleSheet.create({
   },
   table: {
     borderWidth: 0,
-    borderColor: '#000',
+    borderColor: "#000",
     borderRadius: 2,
     marginVertical: 10,
-    backgroundColor: '#BCE9B7',
+    backgroundColor: "#BCE9B7",
   },
   tableRowTop: {
-    flexDirection: 'row',
+    flexDirection: "row",
     borderBottomWidth: 1,
-    borderColor: '#000',
+    borderColor: "#000",
   },
   tableRow: {
-    flexDirection: 'row',
-    borderColor: '#000',
+    flexDirection: "row",
+    borderColor: "#000",
   },
   tableCell: {
     flex: 1,
     padding: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   small: {
     fontSize: 13,
     padding: 10,
-    fontWeight: 'normal',
-  }
+    fontWeight: "normal",
+  },
 });
 
 export default ParkingLotDetails;

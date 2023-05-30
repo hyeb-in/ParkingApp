@@ -53,7 +53,7 @@ const Login = ({ navigation: { navigate } }) => {
       </Btn>
       <Text>
         회원가입
-        <Btn onPress={() => navigate("Join")}>
+        <Btn onPress={() => navigate("Stack", { screen: "Join" })}>
           <BtnText>Join ➡️</BtnText>
         </Btn>
       </Text>

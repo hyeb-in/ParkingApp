@@ -7,14 +7,6 @@ const Search = (props) => {
   const [text, setText] = useState("");
   const [region, setRegion] = useState("서울특별시");
   console.log("region :", region);
-  // const getParkingLotData = () => {
-  //   SearchList(text);
-  //   navigation.navigate("Stack", { screen: "SearchList" });
-  // };
-
-  // useEffect(() => {
-  //   getParkingLotData();
-  // }, []);
 
   const onChangeText = (content) => {
     console.log(content);
@@ -25,7 +17,6 @@ const Search = (props) => {
     setText("");
     navigation.navigate("Stack", {
       screen: "SearchList",
-      //params: { text, region, navigation }, // 수정함
       params: { text, region },
     });
   };
@@ -83,7 +74,7 @@ const Search = (props) => {
           fontSize: 18,
           width: 250,
         }}
-        placeholder={"목적지로 검색하세요"}
+        placeholder={"목적지"}
         placeholderTextColor={"#666"}
         onChangeText={onChangeText}
         value={text}
