@@ -5,16 +5,8 @@ import { Picker } from "@react-native-picker/picker";
 const Search = (props) => {
   const { navigation } = props;
   const [text, setText] = useState("");
-  const [region, setRegion] = useState("");
-
-  // const getParkingLotData = () => {
-  //   SearchList(text);
-  //   navigation.navigate("Stack", { screen: "SearchList" });
-  // };
-
-  // useEffect(() => {
-  //   getParkingLotData();
-  // }, []);
+  const [region, setRegion] = useState("서울특별시");
+  console.log("region :", region);
 
   const onChangeText = (content) => {
     console.log(content);
@@ -44,16 +36,13 @@ const Search = (props) => {
         prompt="도시선택"
         style={{
           width: 110,
-          borderWidth: 1,
           height: 45,
-          paddingHorizontal: 10,
         }} // Adjust the width as needed
         selectedValue={region}
-        onValueChange={(value, index) => setRegion(value)}
-
-        //  setSelectedRegion(itemValue)
+        onValueChange={(value) => setRegion(value)}
       >
         {/* <Picker.Item label="도시" value=" " /> */}
+
         <Picker.Item label="서울" value="서울특별시" />
         <Picker.Item label="인천" value="인천광역시" />
         <Picker.Item label="경기" value="경기도" />
@@ -72,10 +61,10 @@ const Search = (props) => {
         <Picker.Item label="충남" value="충정남도" />
         <Picker.Item label="충북" value="충청북도" />
       </Picker>
+
       <TextInput
         style={{
           borderRadius: 10,
-
           color: "#000",
           borderColor: "#666",
           backgroundColor: "#FFF",
@@ -85,7 +74,7 @@ const Search = (props) => {
           fontSize: 18,
           width: 250,
         }}
-        placeholder={"Search"}
+        placeholder={"목적지"}
         placeholderTextColor={"#666"}
         onChangeText={onChangeText}
         value={text}

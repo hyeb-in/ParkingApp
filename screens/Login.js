@@ -1,12 +1,14 @@
 import React, { useRef, useState } from "react";
 import auth from "@react-native-firebase/auth";
-import { ActivityIndicator, Alert, TextInput } from "react-native";
-import styled from "styled-components/native";
-
-const Container = styled.View``;
-const Text = styled.Text``;
-const Btn = styled.TouchableOpacity``;
-const BtnText = styled.Text``;
+import {
+  ActivityIndicator,
+  Alert,
+  TextInput,
+  Text,
+  Touchable,
+  View,
+  TouchableOpacity,
+} from "react-native";
 
 //로그인 함수
 const Login = ({ navigation: { navigate } }) => {
@@ -28,7 +30,7 @@ const Login = ({ navigation: { navigate } }) => {
   };
 
   return (
-    <Container>
+    <View>
       <TextInput
         placeholder="Email"
         keyboardType="email-address"
@@ -48,16 +50,16 @@ const Login = ({ navigation: { navigate } }) => {
         onChangeText={(text) => setPassword(text)}
         onSubmitEditing={loginSubmit}
       />
-      <Btn onPress={loginSubmit}>
-        <BtnText>Log In</BtnText>
-      </Btn>
+      <TouchableOpacity onPress={loginSubmit}>
+        <Text>Log In</Text>
+      </TouchableOpacity>
       <Text>
         회원가입
-        <Btn onPress={() => navigate("Join")}>
-          <BtnText>Join ➡️</BtnText>
-        </Btn>
+        <TouchableOpacity onPress={() => navigate("Stack", { screen: "Join" })}>
+          <Text>Join ➡️</Text>
+        </TouchableOpacity>
       </Text>
-    </Container>
+    </View>
   );
 };
 export default Login;

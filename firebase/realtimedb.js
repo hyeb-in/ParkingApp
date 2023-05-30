@@ -1,5 +1,5 @@
-import database, { firebase } from "@react-native-firebase/database";
+import database from "@react-native-firebase/database";
 
-const databaseRef = firebase.database().ref();
+const databaseRef = database().ref(`records`);
 
-export { firebase, databaseRef };
+export { databaseRef };

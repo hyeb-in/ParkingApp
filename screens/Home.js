@@ -36,7 +36,7 @@ const Home = ({ navigation }) => {
           }
         /> */}
       {/* </View> */}
-      <StatusBar style={{ color: "black" }} />
+      <StatusBar />
     </View>
   );
 };
