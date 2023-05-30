@@ -10,7 +10,6 @@ import {
 import { useEffect, useState } from "react";
 import database from "@react-native-firebase/database";
 import { databaseRef } from "../firebase/realtimedb";
-import { reverseGeocodeAsync } from "expo-location";
 import Gpio from "../components/Gpio";
 
 const ParkingLotDetails = ({ route }) => {
