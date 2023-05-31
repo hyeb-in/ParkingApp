@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import database from "@react-native-firebase/database";
 import { databaseRef } from "../firebase/realtimedb";
 import Gpio from "../components/Gpio";
+import CheckFavorite from "../components/CheckFavorite";
+import FavoriteList from "./FavoriteList";
 
 const ParkingLotDetails = ({ route }) => {
   const [newReview, setNewReview] = useState("");
@@ -18,13 +20,15 @@ const ParkingLotDetails = ({ route }) => {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
   const [occupiedSeats, setOccupiedSeats] = useState(0);
-
+  const [isFavorite, setIsFavorite] = useState(false);
   const parkingLotId = 7250; //나중에 변수로 바꾸기
   //route.params;
 
   useEffect(() => {
     getParkingLotData();
+    //checkFavoriteStatus();
   }, []);
+
   //realtime database, /records url에서 가져오기
   const getParkingLotData = async () => {
     try {
@@ -34,6 +38,7 @@ const ParkingLotDetails = ({ route }) => {
       const data = snapshot.val();
       setResult(data);
       setLoading(false);
+      console.log(parkingLotId);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -70,18 +75,25 @@ const ParkingLotDetails = ({ route }) => {
     <View style={styles.container}>
       <Text style={styles.title}>
         {result.prkplceNm}
-        <Text style={styles.small}> {result.prkplceSe}</Text>
+        <Text style={styles.small}>  {result.prkplceSe}    
+        <CheckFavorite parkingLotId={parkingLotId} />
       </Text>
+      </Text>
+      <Text style={styles.occupied}>
+        {`잔여 `}
+        <Text style={styles.occupiedN}>
+        {`${Math.max(result.prkcmprt - occupiedSeats, 0)}석`}
+        </Text>
+        <Text style={styles.occupied}>
+        {`/${result.prkcmprt}석`}
+        </Text>
+      </Text>
+
       <Text style={styles.description}>{result.address_name}</Text>
       <Text style={styles.description}>{`운영요일: ${result.operDay}`}</Text>
       <Text
         style={styles.description}
       >{`운영시간: ${result.weekdayOperOpenHhmm} - ${result.weekdayOperColseHhmm}`}</Text>
-      <Text style={styles.description}>{`잔여: ${Math.max(
-        result.prkcmprt - occupiedSeats,
-        0
-      )}석/${result.prkcmprt}석`}</Text>
-      {/* <Text style={styles.description}>{`주차구획수: ${result.prkcmprt}`}</Text> */}
       <View style={styles.table}>
         {/* Table Body */}
 
@@ -116,8 +128,9 @@ const ParkingLotDetails = ({ route }) => {
         onChangeText={(text) => setNewReview(text)}
         value={newReview}
         onSubmitEditing={submitReview}
-      />
+      /><FavoriteList/>
     </View>
+    
   );
 };
 
@@ -136,6 +149,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 8,
+  },
+  occupiedN: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "red",
+  },
+  occupied: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
   description: {
     fontSize: 16,
