@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import auth from "@react-native-firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 
@@ -18,15 +18,32 @@ const MyPage = () => {
 
   return (
     <View>
-      <TouchableOpacity onPress={FavoriteList}>
-        <Text>즐겨찾는 주차장</Text>
+      <TouchableOpacity style={styles.button} onPress={FavoriteList}>
+        <View style={{ marginTop: 20, marginHorizontal: 10, marginBottom:10,}}>
+        <Text style={{ fontSize: 20}}>즐겨찾는 주차장</Text>
+        </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={logOut}>
-        <Text>로그아웃</Text>
+
+      <TouchableOpacity style={styles.button} onPress={logOut}>
+       <View style={{marginHorizontal: 10, marginBottom:10}}>
+        <Text style={{ fontSize: 20}}>로그아웃</Text>
+        </View>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default MyPage;
+const styles = StyleSheet.create({
+  button: {
+    // alignItems: 'center',
+    // backgroundColor: 'yellow',
+    padding: 10,
+    borderRadius: 2,
+    borderColor: "black",
+    borderStyle: "solid",
+    fontSize: 20,
 
+  },
+});
+
+export default MyPage;

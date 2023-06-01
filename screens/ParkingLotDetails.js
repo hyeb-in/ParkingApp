@@ -70,7 +70,7 @@ const ParkingLotDetails = ({ route }) => {
 
   // 클릭 이벤트를 텍스트에 적용하고 눌렸을 때는 추가적으로 정보를 더 볼 수 있도록 하기(기본값을 false)
   if (loading) {
-    return <ActivityIndicator style={{ marginTop: 30 }} />;
+    return <ActivityIndicator style={{ marginTop: 50 }} />;
   }
 
   return (

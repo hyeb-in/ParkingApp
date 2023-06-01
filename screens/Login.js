@@ -32,7 +32,7 @@ const Login = ({ navigation: { navigate } }) => {
   return (
     <View>
       <TextInput
-        placeholder="Email"
+        placeholder="  Email"
         keyboardType="email-address"
         autoCapitalize="none"
         autoCorrect={false}
@@ -43,7 +43,7 @@ const Login = ({ navigation: { navigate } }) => {
       />
       <TextInput
         ref={passwordInput}
-        placeholder="Password"
+        placeholder="  Password"
         secureTextEntry
         value={password}
         returnKeyType="next"
@@ -51,12 +51,12 @@ const Login = ({ navigation: { navigate } }) => {
         onSubmitEditing={loginSubmit}
       />
       <TouchableOpacity onPress={loginSubmit}>
-        <Text>Log In</Text>
+        <Text>  Log In</Text>
       </TouchableOpacity>
       <Text>
-        회원가입
+          회원가입
         <TouchableOpacity onPress={() => navigate("Stack", { screen: "Join" })}>
-          <Text>Join ➡️</Text>
+          <Text>  Join ➡️</Text>
         </TouchableOpacity>
       </Text>
     </View>
