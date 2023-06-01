@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     borderRadius: 5,
     marginVertical: 10,
-    backgroundColor: "#BCE9B7",
+    backgroundColor: "#F5A9A9",
     marginBottom: 20,
   },
   tableRowTop: {

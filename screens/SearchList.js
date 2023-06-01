@@ -86,6 +86,7 @@ const SearchList = ({ route }) => {
       // 로딩 화면에 땃쥐 띄우기
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Image source={require("../assets/mouse.png")} style={{ marginTop: 30, width: 200, height: 200 }} />
+        <Text>loading...</Text>
       </View>
     );
     //return <ActivityIndicator style={{ marginTop: 30 }} />;
