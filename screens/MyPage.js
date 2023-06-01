@@ -1,18 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, ActivityIndicator, } from "react-native";
 import auth from "@react-native-firebase/auth";
-import { useNavigation } from "@react-navigation/native";
 
-const MyPage = () => {
-  const navigation = useNavigation();
+const MyPage = ({ navigation }) => {
+  const [email, setEmail] = useState(null);
+  const [uid, setUid] = useState(null);
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   const logOut = () => {
     auth().signOut();
   };
-  
+
   const FavoriteList = () => {
     navigation.navigate("Stack", {
       screen: "FavoriteList",
+    });
+  };
+
+  const pressHandler = (uid) => {
+    navigation.navigate("Stack", {
+      screen: "MyPageReview",
+      params: uid,
+    });
+  };
+
+  const getUserInfo = () => {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
+        const userEmail = user.email;
+        setUid(uid);
+        setEmail(userEmail);
+        console.log(user);
+        console.log("uid", uid);
+      } else {
+        console.log("user is not signed in");
+      }
     });
   };
 
@@ -23,8 +49,11 @@ const MyPage = () => {
         <Text style={{ fontSize: 20}}>즐겨찾는 주차장</Text>
         </View>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button2} onPress={logOut}>	
+      <Text>사용자 이메일 {email}</Text>
+      <TouchableOpacity onPress={() => pressHandler(uid)}>
+        <Text>내가 쓴 리뷰</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button2} onPress={logOut}>
         <Text>로그아웃</Text>
       </TouchableOpacity>
     </View>

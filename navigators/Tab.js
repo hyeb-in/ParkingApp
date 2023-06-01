@@ -13,9 +13,14 @@ const Tabs = () => {
   
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
-      setIsLogin(!!user);
+      if (user) {
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
     }, []);
   });
+  console.log(islogin);
 
   const tabBarOptions = {
     showLabel: true, 

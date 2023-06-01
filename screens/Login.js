@@ -1,17 +1,21 @@
-import React, { useRef, useState } from "react";
-import auth from "@react-native-firebase/auth";
 import {
-  ActivityIndicator,
-  Alert,
+  SafeAreaView,
+  StyleSheet,
   TextInput,
   Text,
-  Touchable,
-  View,
   TouchableOpacity,
+  View,
+  Alert,
+  Image,
 } from "react-native";
+import React, { useState, useRef } from "react";
 
-//로그인 함수
-const Login = ({ navigation: { navigate } }) => {
+import { Ionicons } from "@expo/vector-icons";
+import Colors from "../constants/Colors";
+import FontSize from "../constants/FontSize";
+
+const LoginScreen = ({ navigation: { navigate } }) => {
+  const Spacing = 10;
   const passwordInput = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,9 +27,9 @@ const Login = ({ navigation: { navigate } }) => {
         email,
         password
       );
-      console.log(logInUser);
+      console.log("login.js", logInUser);
     } catch (e) {
-      Alert.alert(e.code);
+      Alert.alert("잘못된 입력입니다.");
     }
   };
 
@@ -58,8 +62,21 @@ const Login = ({ navigation: { navigate } }) => {
         <TouchableOpacity onPress={() => navigate("Stack", { screen: "Join" })}>
           <Text>  Join ➡️</Text>
         </TouchableOpacity>
-      </Text>
-    </View>
+
+        <View>
+          <Text style={{ textAlign: "center" }}>
+            <TouchableOpacity
+              onPress={() => navigate("Stack", { screen: "Join" })}
+            >
+              <Text>회원가입하기</Text>
+            </TouchableOpacity>
+          </Text>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
-export default Login;
+
+export default LoginScreen;
+
+const styles = StyleSheet.create({});
