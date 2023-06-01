@@ -24,7 +24,7 @@ const Search = (props) => {
     <View
       style={{
         position: "absolute",
-        top: 10,
+        top: 5,
         flexDirection: "row",
         alignContent: "center",
         marginTop: 30,
@@ -37,7 +37,10 @@ const Search = (props) => {
         style={{
           width: 110,
           height: 45,
-        }} // Adjust the width as needed
+          backgroundColor: "white",
+          textAlign: 'center',
+          marginHorizontal: 10,
+      }} // Adjust the width as needed
         selectedValue={region}
         onValueChange={(value) => setRegion(value)}
       >
@@ -64,15 +67,16 @@ const Search = (props) => {
 
       <TextInput
         style={{
-          borderRadius: 10,
+          borderRadius: 5,
           color: "#000",
           borderColor: "#666",
           backgroundColor: "#FFF",
           borderWidth: 1,
-          height: 45,
-          paddingHorizontal: 10,
+          height: 55,
+          paddingHorizontal: 15,
           fontSize: 18,
           width: 250,
+          marginTop: 1,
         }}
         placeholder={"목적지"}
         placeholderTextColor={"#666"}
