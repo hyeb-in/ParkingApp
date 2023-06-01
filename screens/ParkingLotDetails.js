@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   FlatList,
   TextInput,
+  Image,
 } from "react-native";
 import { useEffect, useState } from "react";
 import database from "@react-native-firebase/database";
@@ -73,23 +74,35 @@ const ParkingLotDetails = ({ route }) => {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        {result.prkplceNm}
-        <Text style={styles.small}>  {result.prkplceSe}    
-        <CheckFavorite parkingLotId={parkingLotId} />
-      </Text>
-      </Text>
-      <Text style={styles.occupied}>
-        {`잔여 `}
-        <Text style={styles.occupiedN}>
-        {`${Math.max(result.prkcmprt - occupiedSeats, 0)}석`}
-        </Text>
-        <Text style={styles.occupied}>
-        {`/${result.prkcmprt}석`}
-        </Text>
-      </Text>
+// <<<<<<< favor
+//       <Text style={styles.title}>
+//         {result.prkplceNm}
+//         <Text style={styles.small}>  {result.prkplceSe}    
+//         <CheckFavorite parkingLotId={parkingLotId} />
+//       </Text>
+//       </Text>
+//       <Text style={styles.occupied}>
+//         {`잔여 `}
+//         <Text style={styles.occupiedN}>
+//         {`${Math.max(result.prkcmprt - occupiedSeats, 0)}석`}
+//         </Text>
+//         <Text style={styles.occupied}>
+//         {`/${result.prkcmprt}석`}
+//         </Text>
+//       </Text>
 
-      <Text style={styles.description}>{result.address_name}</Text>
+//       <Text style={styles.description}>{result.address_name}</Text>
+// =======
+      <Text style={styles.title}><Image source={require('../assets/car.png')} style={{width: 30, height: 30}} />  {result.prkplceNm}<Text style={styles.small}>   {result.prkplceSe}</Text></Text>
+
+      {/* 주소 출력 */}
+      {result.roadadr == null ? (
+        <Text style={styles.address}><Image source={require('../assets/location_pin.png')} style={{width: 30, height: 30}} />{result.numadr}</Text>
+      ) : (
+        <Text style={styles.address}><Image source={require('../assets/location_pin.png')} style={{width: 30, height: 30}} />{result.roadadr}</Text>
+      )}
+
+// >>>>>>> main
       <Text style={styles.description}>{`운영요일: ${result.operDay}`}</Text>
       <Text
         style={styles.description}
