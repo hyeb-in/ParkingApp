@@ -4,50 +4,33 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
-  TouchableOpacity,
-  Alert,
+  FlatList,
   TextInput,
   Image,
 } from "react-native";
 import { useEffect, useState } from "react";
+import database from "@react-native-firebase/database";
+import { databaseRef } from "../firebase/realtimedb";
 import Gpio from "../components/Gpio";
 import CheckFavorite from "../components/CheckFavorite";
 import FavoriteList from "./FavoriteList";
-import { databaseRef, reviewRef } from "../firebase/realtimedb";
-import RenderReview from "../components/Review";
-import auth from "@react-native-firebase/auth";
 
 const ParkingLotDetails = ({ route }) => {
   const [newReview, setNewReview] = useState("");
+  const [review, setReview] = useState([]);
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
   const [occupiedSeats, setOccupiedSeats] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const parkingLotId = route.params;
-  const [uid, setUid] = useState();
-  //7250; //나중에 변수로 바꾸기
+  const parkingLotId = 7250; //나중에 변수로 바꾸기
+  //route.params;
 
   useEffect(() => {
-    auth().onAuthStateChanged((user) => {
-      if (user) {
-        const uid = user.uid;
-        setUid(uid);
-      } else {
-        console.log("user is not signed in");
-      }
-    });
     getParkingLotData();
     //checkFavoriteStatus();
   }, []);
 
-  const reviewInputData = {
-    uid: uid,
-    text: newReview,
-    parkingLotId,
-  };
   //realtime database, /records url에서 가져오기
-  //주차장 상세 정보
   const getParkingLotData = async () => {
     try {
       const snapshot = await databaseRef
@@ -63,22 +46,26 @@ const ParkingLotDetails = ({ route }) => {
     }
   };
 
-  //리뷰 저장
   const saveReview = () => {
-    reviewRef.push(reviewInputData).then(() => {
-      setNewReview("");
-    });
+    const reviewRef = database().ref("reviews");
+    const newReviewRef = reviewRef.push();
+    newReviewRef
+      .set({ text: newReview })
+      .then(() => {
+        console.log("Review saved successfully!");
+        setNewReview("");
+      })
+      .catch((error) => {
+        console.log("Error saving review:", error);
+      });
+  };
+
+  const handleOccupiedSeatsChange = (newOccupiedSeats) => {
+    setOccupiedSeats(Math.max(newOccupiedSeats, 0));
   };
 
   const submitReview = () => {
-    if (!uid) {
-      return Alert.alert("로그인 하세요");
-    } else {
-      saveReview();
-    }
-  };
-  const handleOccupiedSeatsChange = (newOccupiedSeats) => {
-    setOccupiedSeats(Math.max(newOccupiedSeats, 0));
+    saveReview();
   };
 
   // 클릭 이벤트를 텍스트에 적용하고 눌렸을 때는 추가적으로 정보를 더 볼 수 있도록 하기(기본값을 false)
@@ -94,43 +81,29 @@ const ParkingLotDetails = ({ route }) => {
           style={{ width: 30, height: 30 }}
         />{" "}
         {result.prkplceNm}
-        <Text style={styles.small}>   {result.prkplceSe} </Text>
+        <Text style={styles.small}> {result.prkplceSe}</Text>
         <CheckFavorite parkingLotId={parkingLotId} /> {/*즐겨찾기 버튼*/}
       </Text>
 
       {/* 주소 출력 */}
       {result.roadadr == null ? (
-        <Text style={styles.address}>
-          <Image
-            source={require("../assets/location_pin.png")}
-            style={{ width: 30, height: 30 }}
-          />
-          {result.numadr}
-        </Text>
+        <Text style={styles.address}><Image source={require('../assets/location_pin.png')} style={{width: 30, height: 30}} />{result.numadr}</Text>
       ) : (
-        <Text style={styles.address}>
-          <Image
-            source={require("../assets/location_pin.png")}
-            style={{ width: 30, height: 30 }}
-          />
-          {result.roadadr}
-        </Text>
+        <Text style={styles.address}><Image source={require('../assets/location_pin.png')} style={{width: 30, height: 30}} />{result.roadadr}</Text>
       )}
-
+      
       {/*잔여석 출력*/}
+      <Text style={styles.occupied}> {`잔여석   `}
+      <Text style={styles.occupiedN}>
+        {`${Math.max(result.prkcmprt - occupiedSeats, 0)} `}
+      </Text>
       <Text style={styles.occupied}>
-        {" "}
-        {`잔여 `}
-        <Text style={styles.occupiedN}>
-          {`${Math.max(result.prkcmprt - occupiedSeats, 0)}석`}
+        {`/ ${result.prkcmprt}석`}
         </Text>
-        <Text style={styles.occupied}>{`/${result.prkcmprt}석`}</Text>
       </Text>
 
-      <Text style={styles.description}>{`운영요일: ${result.operDay}`}</Text>
-      <Text
-        style={styles.description}
-      >{`운영시간: ${result.weekdayOperOpenHhmm} - ${result.weekdayOperColseHhmm}`}</Text>
+      <Text style={styles.description}>{`운영요일 : ${result.operDay}`}</Text>
+      <Text style={styles.description}>{`운영시간 : ${result.weekdayOperOpenHhmm} - ${result.weekdayOperColseHhmm}`}</Text>
       <View style={styles.table}>
         {/* Table Body */}
 
@@ -148,40 +121,26 @@ const ParkingLotDetails = ({ route }) => {
 
         <Gpio onOccupiedSeatsChange={handleOccupiedSeatsChange} />
       </View>
-      <View
+      <TextInput
         style={{
-          flexDirection: "row",
+          borderRadius: 5,
+          color: "#000",
+          borderColor: "#666",
+          backgroundColor: "#FFF",
+          borderWidth: 1,
+          height: 45,
+          paddingHorizontal: 10,
+          fontSize: 18,
+          width: '100%',
         }}
-      >
-        <TextInput
-          style={{
-            borderRadius: 5,
-            color: "#000",
-            borderColor: "#666",
-            backgroundColor: "#FFF",
-            borderWidth: 1,
-            height: 45,
-            paddingHorizontal: 10,
-            fontSize: 18,
-            width: 300,
-          }}
-          placeholder={"리뷰 남기기"}
-          placeholderTextColor={"#666"}
-          onChangeText={(text) => setNewReview(text)}
-          value={newReview}
-          onSubmitEditing={submitReview}
-        />
-        <TouchableOpacity
-          onPress={submitReview}
-          style={{
-            marginLeft: 10,
-          }}
-        >
-          <Text>전송</Text>
-        </TouchableOpacity>
-      </View>
-      <RenderReview parkingLotId={parkingLotId} />
+        placeholder={"리뷰 남기기"}
+        placeholderTextColor={"#666"}
+        onChangeText={(text) => setNewReview(text)}
+        value={newReview}
+        onSubmitEditing={submitReview}
+      />
     </View>
+    
   );
 };
 
@@ -189,7 +148,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    marginTop: 60,
+    marginTop: 100,
+    marginLeft: 10,
+    marginRight: 10,
   },
   image: {
     width: "100%",
@@ -199,7 +160,21 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 8,
+    marginBottom: 0,
+    marginRight:10,
+  },
+  small: {
+    fontSize: 13,
+    padding: 10,
+    fontWeight: "normal",
+    marginLeft: 50,
+  },
+  star: {
+    alignItems: 'flex-end',
+    marginLeft: 100,
+  },
+  address: {
+    marginLeft: -7,
   },
   occupiedN: {
     fontSize: 20,
@@ -209,10 +184,14 @@ const styles = StyleSheet.create({
   occupied: {
     fontSize: 20,
     fontWeight: "bold",
+    marginTop: 50,
+    marginLeft: -5,
+    marginBottom: 20,
   },
   description: {
     fontSize: 16,
-    marginBottom: 16,
+    marginBottom: 10,
+    marginTop: 0,
   },
   description_right: {
     fontSize: 16,
@@ -225,11 +204,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   table: {
-    borderWidth: 0,
+    borderWidth: 1,
     borderColor: "#000",
     borderRadius: 5,
     marginVertical: 10,
     backgroundColor: "#BCE9B7",
+    marginBottom: 20,
   },
   tableRowTop: {
     flexDirection: "row",
@@ -244,11 +224,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     fontWeight: "bold",
-  },
-  small: {
-    fontSize: 13,
-    padding: 10,
-    fontWeight: "normal",
+    textAlign: "center",
   },
 });
 
