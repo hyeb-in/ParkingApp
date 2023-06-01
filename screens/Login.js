@@ -1,17 +1,22 @@
-import React, { useRef, useState } from "react";
-import auth from "@react-native-firebase/auth";
 import {
-  ActivityIndicator,
-  Alert,
-  TextInput,
+  SafeAreaView,
+  StyleSheet,
   Text,
-  Touchable,
-  View,
+  TextInput,
   TouchableOpacity,
+  View,
+  Alert,
+  Image,
 } from "react-native";
+import React, {useState, useRef} from "react";
 
-//로그인 함수
-const Login = ({ navigation: { navigate } }) => {
+
+import { Ionicons } from "@expo/vector-icons";
+import Colors from "../constants/Colors";
+import FontSize from "../constants/FontSize";
+
+const LoginScreen = ({ navigation: { navigate } }) => {
+  const Spacing = 10;
   const passwordInput = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,41 +30,105 @@ const Login = ({ navigation: { navigate } }) => {
       );
       console.log(logInUser);
     } catch (e) {
-      Alert.alert(e.code);
+      Alert.alert('잘못된 입력입니다.');
     }
   };
 
   return (
-    <View>
-      <TextInput
-        placeholder="Email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-        value={email}
-        returnKeyType="next"
-        onChangeText={(text) => setEmail(text)}
-        onSubmitEditing={() => passwordInput.current.focus()}
-      />
-      <TextInput
-        ref={passwordInput}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        returnKeyType="next"
-        onChangeText={(text) => setPassword(text)}
-        onSubmitEditing={loginSubmit}
-      />
-      <TouchableOpacity onPress={loginSubmit}>
-        <Text>Log In</Text>
-      </TouchableOpacity>
-      <Text>
-        회원가입
-        <TouchableOpacity onPress={() => navigate("Stack", { screen: "Join" })}>
-          <Text>Join ➡️</Text>
+    <SafeAreaView>
+      <View
+        style={{
+          padding: Spacing * 2,
+        }}
+      >
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: FontSize.xLarge,
+              color: Colors.primary,
+              //Family: Font["poppins-bold"],
+              marginVertical: Spacing * 3,
+            }}
+          >
+            <Image source={require('../assets/mouse.jpg')} style={{width: 50, height: 50}} />  Login  <Image source={require('../assets/mouse.jpg')} style={{width: 50, height: 50}} />
+          </Text>
+
+        </View>
+        <View
+          style={{
+            marginVertical: Spacing * 3,
+          }}
+        >
+
+          <TextInput
+            placeholder="Email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            value={email}
+            returnKeyType="next"
+            onChangeText={(text) => setEmail(text)}
+            onSubmitEditing={() => passwordInput.current.focus()}
+          />
+          <TextInput
+            ref={passwordInput}
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            returnKeyType="next"
+            onChangeText={(text) => setPassword(text)}
+            onSubmitEditing={loginSubmit}
+          />
+
+          
+
+        </View>
+
+
+        <TouchableOpacity onPress={loginSubmit}
+          style={{
+            padding: Spacing * 2,
+            backgroundColor: Colors.primary,
+            marginTop: Spacing * 8,
+            marginBottom: Spacing * 2,
+            borderRadius: Spacing,
+            shadowColor: Colors.primary,
+            shadowOffset: {
+              width: 0,
+              height: Spacing,
+            },
+            shadowOpacity: 0.3,
+            shadowRadius: Spacing,
+          }}
+        >
+          <Text
+            style={{
+              //fontFamily: Font["poppins-bold"],
+              color: Colors.onPrimary,
+              textAlign: "center",
+              fontSize: FontSize.large,
+            }}
+          >
+            로그인
+          </Text>
         </TouchableOpacity>
-      </Text>
-    </View>
+
+        <View>
+          <Text style={{textAlign: "center"}}>
+              <TouchableOpacity onPress={() => navigate("Stack", { screen: "Join" })}>
+                <Text>회원가입하기</Text>
+              </TouchableOpacity>
+          </Text>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
-export default Login;
+
+export default LoginScreen;
+
+const styles = StyleSheet.create({});

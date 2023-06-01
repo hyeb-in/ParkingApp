@@ -42,8 +42,8 @@ const Tabs = () => {
         component={
           islogin
             ? MyPage
-            : //Login
-              ParkingLotDetails
+            : Login
+              //ParkingLotDetails
         }
         options={{
           title: "마이 페이지",

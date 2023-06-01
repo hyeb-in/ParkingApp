@@ -25,6 +25,11 @@ const Stack = () => (
       component={Join}
       options={{ title: "회원가입" }}
     />
+    {/* <NativeStack.Screen
+      name="Login"
+      component={Login}
+      options={{ title: "로그인" }}
+    /> */}
   </NativeStack.Navigator>
 );
 
