@@ -5,7 +5,6 @@ import MyPage from "../screens/MyPage";
 import Home from "../screens/Home";
 import auth from "@react-native-firebase/auth";
 import Login from "../screens/Login";
-import ParkingLotDetails from "../screens/ParkingLotDetails";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,9 +18,9 @@ const Tabs = () => {
   });
 
   const tabBarOptions = {
-    showLabel: true, // Show the tab labels
+    showLabel: true, 
     style: {
-      height: 100, // Adjust the height of the tab bar as needed
+      height: 100,
     },
   };
 
