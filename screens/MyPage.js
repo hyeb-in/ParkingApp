@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, ActivityIndicator, } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList, ActivityIndicator, } from "react-native";
 import auth from "@react-native-firebase/auth";
 
 const MyPage = ({ navigation }) => {
@@ -46,12 +46,17 @@ const MyPage = ({ navigation }) => {
     <View>
       <TouchableOpacity style={styles.button} onPress={FavoriteList}>
         <View style={{ marginTop: 20, marginHorizontal: 10, marginBottom:10,}}>
-        <Text style={{ fontSize: 20}}>즐겨찾는 주차장</Text>
+        
+        <Text style={{ fontSize: 20,}}> 
+        <Image source={require("../assets/car.png")} style={{ width: 30, height: 30,}} />
+        {" "}  즐겨찾는 주차장 </Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => pressHandler(uid)}>
         <View style={{ marginTop: 20, marginHorizontal: 10, marginBottom:10,}}>
-        <Text style={{ fontSize: 20}}>내가 쓴 리뷰</Text>
+        <Text style={{ fontSize: 20}}>
+        <Image source={require("../assets/reviewPic.png")} style={{ width: 30, height: 30, }} />
+        {" "}  내가 쓴 리뷰</Text>
         </View>
       </TouchableOpacity>
       <Text style={{ marginTop: 500 }}> </Text>
