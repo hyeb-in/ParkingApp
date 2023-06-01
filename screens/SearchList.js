@@ -84,7 +84,7 @@ const SearchList = ({ route }) => {
     return (
       <TouchableOpacity onPress={() => pressHandler(item.item.id, navigation)}>
         {console.log(item.item.id)}
-        <View style={{ marginTop: 10 }}>
+        <View style={{ marginTop: 50 }}>
           <Text style={{ fontSize: 20 }}><Image source={require('../assets/car.png')} style={{width: 30, height: 30}} />  {item.item.prkplceNm}</Text>
         </View>
       </TouchableOpacity>
