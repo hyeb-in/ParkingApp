@@ -9,23 +9,37 @@ import {
   Image,
 } from "react-native";
 import { useEffect, useState } from "react";
-import database from "@react-native-firebase/database";
-import { databaseRef } from "../firebase/realtimedb";
+import { databaseRef, reviewRef } from "../firebase/realtimedb";
 import Gpio from "../components/Gpio";
 import CheckFavorite from "../components/CheckFavorite";
 import FavoriteList from "./FavoriteList";
+import RenderReview from "../components/Review";
+import auth from "@react-native-firebase/auth";
 
 const ParkingLotDetails = ({ route }) => {
   const [newReview, setNewReview] = useState("");
-  const [review, setReview] = useState([]);
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
   const [occupiedSeats, setOccupiedSeats] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-  const parkingLotId = 7250; //나중에 변수로 바꾸기
-  //route.params;
+  const [uid, setUid] = useState();
+  const parkingLotId = route.params;
 
+  //7250; //나중에 변수로 바꾸기
+  const reviewInputData = {
+    uid: uid,
+    text: newReview,
+    parkingLotId,
+  };
   useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
+        setUid(uid);
+      } else {
+        console.log("user is not signed in");
+      }
+    });
     getParkingLotData();
     //checkFavoriteStatus();
   }, []);
@@ -47,17 +61,9 @@ const ParkingLotDetails = ({ route }) => {
   };
 
   const saveReview = () => {
-    const reviewRef = database().ref("reviews");
-    const newReviewRef = reviewRef.push();
-    newReviewRef
-      .set({ text: newReview })
-      .then(() => {
-        console.log("Review saved successfully!");
-        setNewReview("");
-      })
-      .catch((error) => {
-        console.log("Error saving review:", error);
-      });
+    reviewRef.push(reviewInputData).then(() => {
+      setNewReview("");
+    });
   };
 
   const handleOccupiedSeatsChange = (newOccupiedSeats) => {
@@ -82,28 +88,46 @@ const ParkingLotDetails = ({ route }) => {
         />{" "}
         {result.prkplceNm}
         <Text style={styles.small}> {result.prkplceSe}</Text>
-        <CheckFavorite parkingLotId={parkingLotId} /> {/*즐겨찾기 버튼*/}
+        <CheckFavorite
+          parkingLotId={parkingLotId}
+          prkplceNm={result.prkplceNm}
+        />{" "}
+        {/*즐겨찾기 버튼*/}
       </Text>
 
       {/* 주소 출력 */}
       {result.roadadr == null ? (
-        <Text style={styles.address}><Image source={require('../assets/location_pin.png')} style={{width: 30, height: 30}} />{result.numadr}</Text>
-      ) : (
-        <Text style={styles.address}><Image source={require('../assets/location_pin.png')} style={{width: 30, height: 30}} />{result.roadadr}</Text>
-      )}
-      
-      {/*잔여석 출력*/}
-      <Text style={styles.occupied}> {`잔여석   `}
-      <Text style={styles.occupiedN}>
-        {`${Math.max(result.prkcmprt - occupiedSeats, 0)} `}
-      </Text>
-      <Text style={styles.occupied}>
-        {`/ ${result.prkcmprt}석`}
+        <Text style={styles.address}>
+          <Image
+            source={require("../assets/location_pin.png")}
+            style={{ width: 30, height: 30 }}
+          />
+          {result.numadr}
         </Text>
+      ) : (
+        <Text style={styles.address}>
+          <Image
+            source={require("../assets/location_pin.png")}
+            style={{ width: 30, height: 30 }}
+          />
+          {result.roadadr}
+        </Text>
+      )}
+
+      {/*잔여석 출력*/}
+      <Text style={styles.occupied}>
+        {" "}
+        {`잔여석   `}
+        <Text style={styles.occupiedN}>
+          {`${Math.max(result.prkcmprt - occupiedSeats, 0)} `}
+        </Text>
+        <Text style={styles.occupied}>{`/ ${result.prkcmprt}석`}</Text>
       </Text>
 
       <Text style={styles.description}>{`운영요일 : ${result.operDay}`}</Text>
-      <Text style={styles.description}>{`운영시간 : ${result.weekdayOperOpenHhmm} - ${result.weekdayOperColseHhmm}`}</Text>
+      <Text
+        style={styles.description}
+      >{`운영시간 : ${result.weekdayOperOpenHhmm} - ${result.weekdayOperColseHhmm}`}</Text>
       <View style={styles.table}>
         {/* Table Body */}
 
@@ -131,7 +155,7 @@ const ParkingLotDetails = ({ route }) => {
           height: 45,
           paddingHorizontal: 10,
           fontSize: 18,
-          width: '100%',
+          width: "100%",
         }}
         placeholder={"리뷰 남기기"}
         placeholderTextColor={"#666"}
@@ -139,8 +163,8 @@ const ParkingLotDetails = ({ route }) => {
         value={newReview}
         onSubmitEditing={submitReview}
       />
+      <RenderReview parkingLotId={parkingLotId} />
     </View>
-    
   );
 };
 
@@ -161,7 +185,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 0,
-    marginRight:10,
+    marginRight: 10,
   },
   small: {
     fontSize: 13,
@@ -170,7 +194,7 @@ const styles = StyleSheet.create({
     marginLeft: 50,
   },
   star: {
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
     marginLeft: 100,
   },
   address: {
