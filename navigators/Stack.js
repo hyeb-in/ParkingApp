@@ -4,6 +4,7 @@ import SearchList from "../screens/SearchList";
 import ParkingLotDetails from "../screens/ParkingLotDetails";
 import Join from "../screens/Join";
 import Login from "../screens/Login";
+import FavoriteList from "../screens/FavoriteList";
 
 const NativeStack = createNativeStackNavigator();
 
@@ -25,11 +26,6 @@ const Stack = () => (
       component={Join}
       options={{ title: "회원가입" }}
     />
-    {/* <NativeStack.Screen
-      name="Login"
-      component={Login}
-      options={{ title: "로그인" }}
-    /> */}
   </NativeStack.Navigator>
 );
 
