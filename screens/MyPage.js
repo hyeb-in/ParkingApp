@@ -24,10 +24,8 @@ const MyPage = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={logOut}>
-       <View style={{marginHorizontal: 10, marginBottom:10}}>
-        <Text style={{ fontSize: 20}}>로그아웃</Text>
-        </View>
+      <TouchableOpacity style={styles.button2} onPress={logOut}>	
+        <Text>로그아웃</Text>
       </TouchableOpacity>
     </View>
   );
@@ -35,15 +33,19 @@ const MyPage = () => {
 
 const styles = StyleSheet.create({
   button: {
-    // alignItems: 'center',
-    // backgroundColor: 'yellow',
     padding: 10,
     borderRadius: 2,
     borderColor: "black",
     borderStyle: "solid",
     fontSize: 20,
-
   },
+  button2: {
+    alignItems: 'flex-end',
+    paddingTop: 600,
+    paddingRight: 15,
+    fontSize: 20,
+  },
+
 });
 
 export default MyPage;
