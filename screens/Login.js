@@ -9,10 +9,9 @@ import {
   Image,
 } from "react-native";
 import React, { useState, useRef } from "react";
-
-import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import FontSize from "../constants/FontSize";
+import auth from "@react-native-firebase/auth";
 
 const LoginScreen = ({ navigation: { navigate } }) => {
   const Spacing = 10;
@@ -29,38 +28,94 @@ const LoginScreen = ({ navigation: { navigate } }) => {
       );
       console.log("login.js", logInUser);
     } catch (e) {
-      Alert.alert("잘못된 입력입니다.");
+      Alert.alert("error", e.message);
     }
   };
 
   return (
-    <View>
-      <TextInput
-        placeholder="  Email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-        value={email}
-        returnKeyType="next"
-        onChangeText={(text) => setEmail(text)}
-        onSubmitEditing={() => passwordInput.current.focus()}
-      />
-      <TextInput
-        ref={passwordInput}
-        placeholder="  Password"
-        secureTextEntry
-        value={password}
-        returnKeyType="next"
-        onChangeText={(text) => setPassword(text)}
-        onSubmitEditing={loginSubmit}
-      />
-      <TouchableOpacity onPress={loginSubmit}>
-        <Text>  Log In</Text>
-      </TouchableOpacity>
-      <Text>
-          회원가입
-        <TouchableOpacity onPress={() => navigate("Stack", { screen: "Join" })}>
-          <Text>  Join ➡️</Text>
+    <SafeAreaView>
+      <View
+        style={{
+          padding: Spacing * 2,
+        }}
+      >
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: FontSize.xLarge,
+              color: Colors.primary,
+              //Family: Font["poppins-bold"],
+              marginVertical: Spacing * 3,
+            }}
+          >
+            <Image
+              source={require("../assets/mouse.jpg")}
+              style={{ width: 50, height: 50 }}
+            />{" "}
+            Login{" "}
+            <Image
+              source={require("../assets/mouse.jpg")}
+              style={{ width: 50, height: 50 }}
+            />
+          </Text>
+        </View>
+        <View
+          style={{
+            marginVertical: Spacing * 3,
+          }}
+        >
+          <TextInput
+            placeholder="Email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            value={email}
+            returnKeyType="next"
+            onChangeText={(text) => setEmail(text)}
+            onSubmitEditing={() => passwordInput.current.focus()}
+          />
+          <TextInput
+            ref={passwordInput}
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            returnKeyType="next"
+            onChangeText={(text) => setPassword(text)}
+            onSubmitEditing={loginSubmit}
+          />
+        </View>
+
+        <TouchableOpacity
+          onPress={loginSubmit}
+          style={{
+            padding: Spacing * 2,
+            backgroundColor: Colors.primary,
+            marginTop: Spacing * 8,
+            marginBottom: Spacing * 2,
+            borderRadius: Spacing,
+            shadowColor: Colors.primary,
+            shadowOffset: {
+              width: 0,
+              height: Spacing,
+            },
+            shadowOpacity: 0.3,
+            shadowRadius: Spacing,
+          }}
+        >
+          <Text
+            style={{
+              //fontFamily: Font["poppins-bold"],
+              color: Colors.onPrimary,
+              textAlign: "center",
+              fontSize: FontSize.large,
+            }}
+          >
+            로그인
+          </Text>
         </TouchableOpacity>
 
         <View>

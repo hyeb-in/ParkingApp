@@ -20,7 +20,6 @@ const Tabs = () => {
       }
     }, []);
   });
-  console.log(islogin);
 
   const tabBarOptions = {
     showLabel: true, 

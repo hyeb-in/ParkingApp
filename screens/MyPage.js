@@ -49,10 +49,12 @@ const MyPage = ({ navigation }) => {
         <Text style={{ fontSize: 20}}>즐겨찾는 주차장</Text>
         </View>
       </TouchableOpacity>
-      <Text>사용자 이메일 {email}</Text>
-      <TouchableOpacity onPress={() => pressHandler(uid)}>
-        <Text>내가 쓴 리뷰</Text>
+      <TouchableOpacity style={styles.button} onPress={() => pressHandler(uid)}>
+        <View style={{ marginTop: 20, marginHorizontal: 10, marginBottom:10,}}>
+        <Text style={{ fontSize: 20}}>내가 쓴 리뷰</Text>
+        </View>
       </TouchableOpacity>
+      <Text style={{ marginTop: 500 }}> </Text>
       <TouchableOpacity style={styles.button2} onPress={logOut}>
         <Text>로그아웃</Text>
       </TouchableOpacity>
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
   },
   button2: {
     alignItems: 'flex-end',
-    paddingTop: 610,
+    paddingTop: 10,
     paddingRight: 20,
     fontSize: 20,
   },
