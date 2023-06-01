@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
   },
   button2: {
     alignItems: 'flex-end',
-    paddingTop: 600,
-    paddingRight: 15,
+    paddingTop: 610,
+    paddingRight: 20,
     fontSize: 20,
   },
 
