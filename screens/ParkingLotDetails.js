@@ -4,29 +4,44 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
-  FlatList,
+  Alert,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { useEffect, useState } from "react";
-import database from "@react-native-firebase/database";
-import { databaseRef } from "../firebase/realtimedb";
-import { reverseGeocodeAsync } from "expo-location";
+import { databaseRef, reviewRef } from "../firebase/realtimedb";
 import Gpio from "../components/Gpio";
+import RenderReview from "../components/Review";
+import auth from "@react-native-firebase/auth";
 
 const ParkingLotDetails = ({ route }) => {
   const [newReview, setNewReview] = useState("");
-  const [review, setReview] = useState([]);
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
   const [occupiedSeats, setOccupiedSeats] = useState(0);
-
-  const parkingLotId = 7250; //나중에 변수로 바꾸기
-  //route.params;
+  const parkingLotId = 13695; //route.params;
+  const [uid, setUid] = useState();
+  //7250; //나중에 변수로 바꾸기
 
   useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
+        setUid(uid);
+      } else {
+        console.log("user is not signed in");
+      }
+    });
     getParkingLotData();
   }, []);
+
+  const reviewInputData = {
+    uid: uid,
+    text: newReview,
+    parkingLotId,
+  };
   //realtime database, /records url에서 가져오기
+  //주차장 상세 정보
   const getParkingLotData = async () => {
     try {
       const snapshot = await databaseRef
@@ -41,26 +56,22 @@ const ParkingLotDetails = ({ route }) => {
     }
   };
 
+  //리뷰 저장
   const saveReview = () => {
-    const reviewRef = database().ref("reviews");
-    const newReviewRef = reviewRef.push();
-    newReviewRef
-      .set({ text: newReview })
-      .then(() => {
-        console.log("Review saved successfully!");
-        setNewReview("");
-      })
-      .catch((error) => {
-        console.log("Error saving review:", error);
-      });
-  };
-
-  const handleOccupiedSeatsChange = (newOccupiedSeats) => {
-    setOccupiedSeats(Math.max(newOccupiedSeats, 0));
+    reviewRef.push(reviewInputData).then(() => {
+      setNewReview("");
+    });
   };
 
   const submitReview = () => {
-    saveReview();
+    if (!uid) {
+      return Alert.alert("로그인 하세요");
+    } else {
+      saveReview();
+    }
+  };
+  const handleOccupiedSeatsChange = (newOccupiedSeats) => {
+    setOccupiedSeats(Math.max(newOccupiedSeats, 0));
   };
 
   // 클릭 이벤트를 텍스트에 적용하고 눌렸을 때는 추가적으로 정보를 더 볼 수 있도록 하기(기본값을 false)
@@ -100,24 +111,39 @@ const ParkingLotDetails = ({ route }) => {
 
         <Gpio onOccupiedSeatsChange={handleOccupiedSeatsChange} />
       </View>
-      <TextInput
+      <View
         style={{
-          borderRadius: 5,
-          color: "#000",
-          borderColor: "#666",
-          backgroundColor: "#FFF",
-          borderWidth: 1,
-          height: 45,
-          paddingHorizontal: 10,
-          fontSize: 18,
-          width: 300,
+          flexDirection: "row",
         }}
-        placeholder={"리뷰 남기기"}
-        placeholderTextColor={"#666"}
-        onChangeText={(text) => setNewReview(text)}
-        value={newReview}
-        onSubmitEditing={submitReview}
-      />
+      >
+        <TextInput
+          style={{
+            borderRadius: 5,
+            color: "#000",
+            borderColor: "#666",
+            backgroundColor: "#FFF",
+            borderWidth: 1,
+            height: 45,
+            paddingHorizontal: 10,
+            fontSize: 18,
+            width: 300,
+          }}
+          placeholder={"리뷰 남기기"}
+          placeholderTextColor={"#666"}
+          onChangeText={(text) => setNewReview(text)}
+          value={newReview}
+          onSubmitEditing={submitReview}
+        />
+        <TouchableOpacity
+          onPress={submitReview}
+          style={{
+            marginLeft: 10,
+          }}
+        >
+          <Text>전송</Text>
+        </TouchableOpacity>
+      </View>
+      <RenderReview parkingLotId={parkingLotId} />
     </View>
   );
 };

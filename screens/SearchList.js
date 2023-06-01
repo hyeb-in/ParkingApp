@@ -3,21 +3,14 @@ import { ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import Fuse from "fuse.js";
 import { databaseRef } from "../firebase/realtimedb";
-//import ParkingLotDetails from "./ParkingLotDetails"; // 이게 상세정보 페이지
-//import Stack from "../navigators/Stack";
-//import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
-
-//const NativeStack = createNativeStackNavigator();
 
 const SearchList = ({ route }) => {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
-  //const { text, region, navigation } = route.params;
   const { text, region } = route.params;
   const navigation = useNavigation();
 
-  console.log("지역", region);
   // 아래 코드는 데이터 베이스 코드 (파이어베이스 용량 제한 때문에 )
   useEffect(() => {
     getParkingLotData();
@@ -28,7 +21,7 @@ const SearchList = ({ route }) => {
       const snapshot = await databaseRef
         .orderByChild("address_name")
         .startAt(region)
-        .endAt(region + "\uf8ff'")
+        .endAt(region + "\uf8ff")
         .once("value");
       const data = snapshot.val();
 
@@ -48,7 +41,7 @@ const SearchList = ({ route }) => {
       // minMatchCharLength 최소로 일치해야할 단어 수 (검색어랑 길이 다르면 이상한 거까지 나와서 걍 검색어 수로 맞춰두면 될 듯)
       const options = {
         keys: ["address_name"],
-        threshold: 0.7,
+        threshold: 1,
         minMatchCharLength: query.length,
       };
 
@@ -58,7 +51,6 @@ const SearchList = ({ route }) => {
       // console.log(query.length);
       // console.log(results);
       setResult(results);
-
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -69,21 +61,19 @@ const SearchList = ({ route }) => {
   const pressHandler = (id, navigation) => {
     // 클릭 이벤트 핸들러
     //console.log(navigation); // undefined
-    if (navigation) {
-      // 이게 안됨
-      //console.log("주차장명 = ", prkplceNm, ", id = ", id);
-      navigation.navigate("Stack", {
-        screen: "ParkingLotDetails",
-        params: id,
-      });
-    }
+
+    // 이게 안됨
+    //console.log("주차장명 = ", prkplceNm, ", id = ", id);
+    navigation.navigate("Stack", {
+      screen: "ParkingLotDetails",
+      params: id,
+    });
   };
 
   // Define the renderItem function to render each item
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => pressHandler(item.item.id, navigation)}>
-        {console.log(item.item.id)}
         <View style={{ marginTop: 10 }}>
           <Text style={{ fontSize: 20 }}>{item.item.prkplceNm}</Text>
         </View>
@@ -105,9 +95,7 @@ const SearchList = ({ route }) => {
       style={{ marginTop: 70, marginLeft: 20 }}
       data={result}
       renderItem={renderItem}
-      keyExtractor={(item) =>
-        item.id ? item.id.toString() : Math.random().toString()
-      }
+      keyExtractor={(item) => item.item.id}
     />
   );
 };
