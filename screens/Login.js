@@ -53,12 +53,12 @@ const LoginScreen = ({ navigation: { navigate } }) => {
             }}
           >
             <Image
-              source={require("../assets/mouse.jpg")}
+              source={require("../assets/mouse.png")}
               style={{ width: 50, height: 50 }}
             />{" "}
             Login{" "}
             <Image
-              source={require("../assets/mouse.jpg")}
+              source={require("../assets/mouse.png")}
               style={{ width: 50, height: 50 }}
             />
           </Text>

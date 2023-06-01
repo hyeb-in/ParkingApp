@@ -70,7 +70,7 @@ const Join = ({ navigation: { navigate } }) => {
               marginBottom: Spacing*6.5,
             }}
           >
-            <Image source={require('../assets/mouse.jpg')} style={{width: 50, height: 50}} />  Sign up  <Image source={require('../assets/mouse.jpg')} style={{width: 50, height: 50}} />
+            <Image source={require('../assets/mouse.png')} style={{width: 50, height: 50}} />  Sign up  <Image source={require('../assets/mouse.png')} style={{width: 50, height: 50}} />
           </Text>
 
         </View>
