@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginLeft:5,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 5,
+    marginTop: 10,
   },
   buttonFavorite: {
     backgroundColor: "lightgray",
