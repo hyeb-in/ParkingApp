@@ -1,60 +1,83 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import { useEffect, useState } from "react";
-import { databaseRef } from "../firebase/realtimedb";
 import auth from "@react-native-firebase/auth";
+import database from "@react-native-firebase/database";
 
-const CheckFavorite = ({ onPress, style, children, parkingLotId }) => {
-  const [loading, setLoading] = useState(true);
-  const [result, setResult] = useState([]);
+const CheckFavorite = ({ parkingLotId, prkplceNm }) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  //const parkingLotId = 7250; //나중에 변수로 바꾸기
-  //route.params;
-
+  const parkingId = parseInt(parkingLotId);
+  const user = auth().currentUser;
   useEffect(() => {
-    getParkingLotData();
-    checkFavoriteStatus();
+    // checkFavoriteStatus();
+    getFavoriteStatus();
   }, []);
 
-  //realtime database, /records url에서 가져오기
-  const getParkingLotData = async () => {
-    try {
-      const snapshot = await databaseRef
-        .child(`/${parkingLotId}`)
-        .once("value");
-      const data = snapshot.val();
-      setResult(data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
+  const favoritesRef = database().ref(`users/${user.uid}/favorites`);
 
   const checkFavoriteStatus = async () => {
-    const user = auth().currentUser;
     if (user) {
       try {
-        const favoritesSnapshot = await databaseRef
-          .child(`users/${user.uid}/favorites`)
+        const favoritesSnapshot = await database()
+          .ref(`users/${user.uid}/favorites`)
+          .orderByChild("pakringLotId")
+          .equalTo(parkingId)
           .once("value");
+
         const favorites = favoritesSnapshot.val();
-        setIsFavorite(favorites && favorites[parkingLotId] ? true : false);
+        console.log("스냅샷", favorites);
+        setIsFavorite(favorites && favorites[favoriteStatus] ? true : false);
       } catch (error) {
         console.log("Error checking favorite status:", error);
       }
     }
   };
 
-  const toggleFavorite = async () => {
-    const user = auth().currentUser;
+  const getFavoriteStatus = async () => {
     if (user) {
       try {
-        const favoritesRef = databaseRef.child(`users/${user.uid}/favorites`);
+        const snapshot = await favoritesRef
+          .orderByChild("parkingLotId")
+          .equalTo(parkingId)
+          .once("value");
+
+        const data = snapshot.val();
+        console.log(data);
+
+        const myStatus = data
+          ? Object.keys(data).map((key) => ({
+              id: key,
+              favoriteStatus: data[key].favoriteStatus,
+            }))
+          : [];
+        setIsFavorite(myStatus && myStatus[0].favoriteStatus ? true : false);
+        console.log("status", myStatus[0].favoriteStatus);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const toggleFavorite = () => {
+    if (user) {
+      try {
         const favoriteStatus = !isFavorite;
-        await favoritesRef.child(parkingLotId.toString()).set(favoriteStatus);
+
+        favoritesRef.push({
+          parkingLotId: parkingId,
+          favoriteStatus,
+          prkplceNm,
+        });
+
         setIsFavorite(favoriteStatus);
-        console.log("parkingLotId", parkingLotId, "isFavorite:", isFavorite);
+        console.log(
+          "parkingLotId",
+          parkingLotId,
+          "isFavorite:",
+          isFavorite,
+          "주차장 이름:",
+          prkplceNm
+        );
       } catch (error) {
         console.log("Error toggling favorite:", error);
       }
@@ -69,9 +92,7 @@ const CheckFavorite = ({ onPress, style, children, parkingLotId }) => {
         isFavorite ? styles.buttonFavorite : styles.buttonNotFavorite,
       ]}
     >
-      {/* 즐겨찾기 이모지 하트로 변경 */}
-      <Text style={styles.buttonText}>{isFavorite ? "🤍" : "❤"}</Text> 
-
+      <Text style={styles.buttonText}>{isFavorite ? "★" : "★"}</Text>
     </TouchableOpacity>
   );
 };
@@ -82,21 +103,19 @@ const styles = StyleSheet.create({
     height: 32,
     paddingBottom: 2,
     borderRadius: 20,
-    marginLeft:5,
+    marginLeft: 5,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
+    marginTop: 5,
   },
   buttonFavorite: {
-    //backgroundColor: "lightgray",
-    //color: "red",
+    backgroundColor: "lightgray",
   },
   buttonNotFavorite: {
-    //backgroundColor: "lightblue",
-    //color: "black",
+    backgroundColor: "lightblue",
   },
   buttonText: {
-    color: "black",
+    color: "white",
     fontSize: 22,
     marginBottom: 1,
   },

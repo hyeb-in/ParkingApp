@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, ActivityIndicator, } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import auth from "@react-native-firebase/auth";
 
 const MyPage = ({ navigation }) => {
@@ -45,13 +52,13 @@ const MyPage = ({ navigation }) => {
   return (
     <View>
       <TouchableOpacity style={styles.button} onPress={FavoriteList}>
-        <View style={{ marginTop: 20, marginHorizontal: 10, marginBottom:10,}}>
-        <Text style={{ fontSize: 20}}>즐겨찾는 주차장</Text>
+        <View style={{ marginTop: 20, marginHorizontal: 10, marginBottom: 10 }}>
+          <Text style={{ fontSize: 20 }}>즐겨찾는 주차장</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => pressHandler(uid)}>
-        <View style={{ marginTop: 20, marginHorizontal: 10, marginBottom:10,}}>
-        <Text style={{ fontSize: 20}}>내가 쓴 리뷰</Text>
+        <View style={{ marginTop: 20, marginHorizontal: 10, marginBottom: 10 }}>
+          <Text style={{ fontSize: 20 }}>내가 쓴 리뷰</Text>
         </View>
       </TouchableOpacity>
       <Text style={{ marginTop: 500 }}> </Text>
@@ -71,12 +78,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button2: {
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
     paddingTop: 10,
     paddingRight: 20,
     fontSize: 20,
   },
-
 });
 
 export default MyPage;

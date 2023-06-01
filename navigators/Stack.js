@@ -32,6 +32,11 @@ const Stack = () => (
       component={MyPageReview}
       option={{ title: "내가 쓴 리뷰" }}
     />
+    <NativeStack.Screen
+      name="FavoriteList"
+      component={FavoriteList}
+      option={{ title: "즐겨찾기" }}
+    />
   </NativeStack.Navigator>
 );
 

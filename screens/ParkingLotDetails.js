@@ -90,7 +90,7 @@ const ParkingLotDetails = ({ route }) => {
         <Text style={styles.small}> {result.prkplceSe}</Text>
         <CheckFavorite
           parkingLotId={parkingLotId}
-          // prkplceNm={result.prkplceNm}
+          prkplceNm={result.prkplceNm}
         />{" "}
         {/*즐겨찾기 버튼*/}
       </Text>
