@@ -38,7 +38,11 @@ const Join = ({ navigation: { navigate } }) => {
 
     try {
       //회원가입
-      await auth().createUserWithEmailAndPassword(email, password);
+      const userCredential = await auth().createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      console.log(userCredential);
     } catch (e) {
       //Alert.alert(e.code);
       Alert.alert("에러");

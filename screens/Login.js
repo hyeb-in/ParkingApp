@@ -1,15 +1,14 @@
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
   TextInput,
+  Text,
   TouchableOpacity,
   View,
   Alert,
   Image,
 } from "react-native";
-import React, {useState, useRef} from "react";
-
+import React, { useState, useRef } from "react";
 
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
@@ -28,9 +27,9 @@ const LoginScreen = ({ navigation: { navigate } }) => {
         email,
         password
       );
-      console.log(logInUser);
+      console.log("login.js", logInUser);
     } catch (e) {
-      Alert.alert('잘못된 입력입니다.');
+      Alert.alert("잘못된 입력입니다.");
     }
   };
 
@@ -54,16 +53,22 @@ const LoginScreen = ({ navigation: { navigate } }) => {
               marginVertical: Spacing * 3,
             }}
           >
-            <Image source={require('../assets/mouse.jpg')} style={{width: 50, height: 50}} />  Login  <Image source={require('../assets/mouse.jpg')} style={{width: 50, height: 50}} />
+            <Image
+              source={require("../assets/mouse.jpg")}
+              style={{ width: 50, height: 50 }}
+            />{" "}
+            Login{" "}
+            <Image
+              source={require("../assets/mouse.jpg")}
+              style={{ width: 50, height: 50 }}
+            />
           </Text>
-
         </View>
         <View
           style={{
             marginVertical: Spacing * 3,
           }}
         >
-
           <TextInput
             placeholder="Email"
             keyboardType="email-address"
@@ -83,13 +88,10 @@ const LoginScreen = ({ navigation: { navigate } }) => {
             onChangeText={(text) => setPassword(text)}
             onSubmitEditing={loginSubmit}
           />
-
-          
-
         </View>
 
-
-        <TouchableOpacity onPress={loginSubmit}
+        <TouchableOpacity
+          onPress={loginSubmit}
           style={{
             padding: Spacing * 2,
             backgroundColor: Colors.primary,
@@ -118,10 +120,12 @@ const LoginScreen = ({ navigation: { navigate } }) => {
         </TouchableOpacity>
 
         <View>
-          <Text style={{textAlign: "center"}}>
-              <TouchableOpacity onPress={() => navigate("Stack", { screen: "Join" })}>
-                <Text>회원가입하기</Text>
-              </TouchableOpacity>
+          <Text style={{ textAlign: "center" }}>
+            <TouchableOpacity
+              onPress={() => navigate("Stack", { screen: "Join" })}
+            >
+              <Text>회원가입하기</Text>
+            </TouchableOpacity>
           </Text>
         </View>
       </View>

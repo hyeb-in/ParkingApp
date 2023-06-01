@@ -13,10 +13,15 @@ const Tabs = () => {
   const [islogin, setIsLogin] = useState(false);
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
-      setIsLogin(!!user);
+      if (user) {
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
     }, []);
   });
 
+  console.log(islogin);
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -40,10 +45,8 @@ const Tabs = () => {
       <Tab.Screen
         name="MyPage"
         component={
-          islogin
-            ? MyPage
-            : //Login
-              ParkingLotDetails
+          islogin ? MyPage : Login
+          // ParkingLotDetails
         }
         options={{
           title: "마이 페이지",

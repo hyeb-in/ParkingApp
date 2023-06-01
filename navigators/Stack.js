@@ -5,6 +5,7 @@ import ParkingLotDetails from "../screens/ParkingLotDetails";
 import Join from "../screens/Join";
 import Login from "../screens/Login";
 import FavoriteList from "../screens/FavoriteList";
+import MyPageReview from "../screens/MyReview";
 
 const NativeStack = createNativeStackNavigator();
 
@@ -25,6 +26,11 @@ const Stack = () => (
       name="Join"
       component={Join}
       options={{ title: "회원가입" }}
+    />
+    <NativeStack.Screen
+      name="MyPageReview"
+      component={MyPageReview}
+      option={{ title: "내가 쓴 리뷰" }}
     />
   </NativeStack.Navigator>
 );
