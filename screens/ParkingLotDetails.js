@@ -94,7 +94,7 @@ const ParkingLotDetails = ({ route }) => {
           style={{ width: 30, height: 30 }}
         />{" "}
         {result.prkplceNm}
-        <Text style={styles.small}> {result.prkplceSe}</Text>
+        <Text style={styles.small}>   {result.prkplceSe} </Text>
         <CheckFavorite parkingLotId={parkingLotId} /> {/*즐겨찾기 버튼*/}
       </Text>
 
@@ -141,8 +141,8 @@ const ParkingLotDetails = ({ route }) => {
         </View>
 
         <View style={styles.tableRow}>
-          <Text style={styles.tableCell}></Text>
-          <Text style={styles.tableCell}>{`${result.basicTime}시간`}</Text>
+          <Text style={styles.tableCell}>₩</Text>
+          <Text style={styles.tableCell}>{`${result.basicTime}분`}</Text>
           <Text style={styles.tableCell}>{`${result.basicCharge}원`}</Text>
         </View>
 
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   table: {
     borderWidth: 0,
     borderColor: "#000",
-    borderRadius: 2,
+    borderRadius: 5,
     marginVertical: 10,
     backgroundColor: "#BCE9B7",
   },

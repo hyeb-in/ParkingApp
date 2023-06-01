@@ -69,7 +69,9 @@ const CheckFavorite = ({ onPress, style, children, parkingLotId }) => {
         isFavorite ? styles.buttonFavorite : styles.buttonNotFavorite,
       ]}
     >
-      <Text style={styles.buttonText}>{isFavorite ? "★" : "★"}</Text>
+      {/* 즐겨찾기 이모지 하트로 변경 */}
+      <Text style={styles.buttonText}>{isFavorite ? "🤍" : "❤"}</Text> 
+
     </TouchableOpacity>
   );
 };
@@ -86,13 +88,15 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   buttonFavorite: {
-    backgroundColor: "lightgray",
+    //backgroundColor: "lightgray",
+    //color: "red",
   },
   buttonNotFavorite: {
-    backgroundColor: "lightblue",
+    //backgroundColor: "lightblue",
+    //color: "black",
   },
   buttonText: {
-    color: "white",
+    color: "black",
     fontSize: 22,
     marginBottom: 1,
   },
