@@ -82,12 +82,13 @@ const SearchList = ({ route }) => {
   };
 
   if (loading) {
-    // return (
-    //   <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-    //     <Image source={require("../ddot.png")} style={{ marginTop: 30 }} />
-    //   </View>
-    // );
-    return <ActivityIndicator style={{ marginTop: 30 }} />;
+    return (
+      // 로딩 화면에 땃쥐 띄우기
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Image source={require("../assets/mouse.png")} style={{ marginTop: 30, width: 200, height: 200 }} />
+      </View>
+    );
+    //return <ActivityIndicator style={{ marginTop: 30 }} />;
   }
 
   return (
