@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  FlatList,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, ActivityIndicator, } from "react-native";
 import auth from "@react-native-firebase/auth";
 
 const MyPage = ({ navigation }) => {
@@ -50,19 +44,37 @@ const MyPage = ({ navigation }) => {
 
   return (
     <View>
-      <TouchableOpacity onPress={FavoriteList}>
-        <Text>즐겨찾는 주차장</Text>
+      <TouchableOpacity style={styles.button} onPress={FavoriteList}>
+        <View style={{ marginTop: 20, marginHorizontal: 10, marginBottom:10,}}>
+        <Text style={{ fontSize: 20}}>즐겨찾는 주차장</Text>
+        </View>
       </TouchableOpacity>
       <Text>사용자 이메일 {email}</Text>
       <TouchableOpacity onPress={() => pressHandler(uid)}>
         <Text>내가 쓴 리뷰</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity onPress={logOut}>
+      <TouchableOpacity style={styles.button2} onPress={logOut}>
         <Text>로그아웃</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    padding: 10,
+    borderRadius: 2,
+    borderColor: "black",
+    borderStyle: "solid",
+    fontSize: 20,
+  },
+  button2: {
+    alignItems: 'flex-end',
+    paddingTop: 610,
+    paddingRight: 20,
+    fontSize: 20,
+  },
+
+});
 
 export default MyPage;
