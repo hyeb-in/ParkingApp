@@ -19,7 +19,7 @@ const ParkingLotDetails = ({ route }) => {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
   const [occupiedSeats, setOccupiedSeats] = useState(0);
-  const parkingLotId = 13695; //route.params;
+  const parkingLotId = route.params;
   const [uid, setUid] = useState();
   //7250; //나중에 변수로 바꾸기
 

@@ -13,10 +13,15 @@ const Tabs = () => {
   const [islogin, setIsLogin] = useState(false);
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
-      setIsLogin(!!user);
+      if (user) {
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
     }, []);
   });
 
+  console.log(islogin);
   return (
     <Tab.Navigator
       initialRouteName="Home"

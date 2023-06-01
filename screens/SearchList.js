@@ -48,8 +48,7 @@ const SearchList = ({ route }) => {
       //검색 필터 라이브러리 indextData에서 options로 필터링하는 것,
       const fuse = new Fuse(indexData, options);
       const results = fuse.search(query);
-      // console.log(query.length);
-      // console.log(results);
+
       setResult(results);
       setLoading(false);
     } catch (error) {

@@ -22,7 +22,7 @@ const Login = ({ navigation: { navigate } }) => {
         email,
         password
       );
-      console.log(logInUser);
+      console.log("login.js", logInUser);
     } catch (e) {
       Alert.alert(e.code);
     }

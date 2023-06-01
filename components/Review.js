@@ -7,6 +7,7 @@ import { reviewRef } from "../firebase/realtimedb";
 
 const RenderReview = (props) => {
   const [review, setReview] = useState([]);
+
   const { parkingLotId } = props;
   useEffect(() => {
     getReview();
