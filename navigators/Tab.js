@@ -77,8 +77,8 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
           <TouchableOpacity
             key={index}
             onPress={onPress}
-            style={{ paddingVertical: 20 }}
-          >
+            style={{ paddingVertical: 18, borderTopColor:  isFocused ? "#000000" : "#999999", borderTopWidth:1 }}
+            >
             <Text style={{ color: isFocused ? "#000000" : "#999999", fontSize: 16 }}>
               {label}
             </Text>
