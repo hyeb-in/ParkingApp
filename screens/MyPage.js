@@ -74,7 +74,7 @@ const MyPage = ({ navigation }) => {
           </Text>
         </View>
       </TouchableOpacity>
-      <Text style={{ marginTop: 500 }}> </Text>
+      <Text style={{ marginTop: 400 }}> </Text>
       <TouchableOpacity style={styles.button2} onPress={logOut}>
         <Text>로그아웃</Text>
       </TouchableOpacity>

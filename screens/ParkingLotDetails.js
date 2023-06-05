@@ -7,6 +7,7 @@ import {
   FlatList,
   TextInput,
   Image,
+  Alert,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { databaseRef, reviewRef } from "../firebase/realtimedb";
@@ -31,15 +32,16 @@ const ParkingLotDetails = ({ route }) => {
     text: newReview,
     parkingLotId,
   };
+
   useEffect(() => {
-    auth().onAuthStateChanged((user) => {
-      if (user) {
-        const uid = user.uid;
-        setUid(uid);
-      } else {
-        console.log("user is not signed in");
-      }
-    });
+    const user = auth().currentUser;
+
+    if (user) {
+      setUid(user.uid);
+    } else {
+      console.log("user is not signed in");
+    }
+
     getParkingLotData();
     //checkFavoriteStatus();
   }, []);
@@ -64,6 +66,13 @@ const ParkingLotDetails = ({ route }) => {
     reviewRef.push(reviewInputData).then(() => {
       setNewReview("");
     });
+    // if (user) {
+    //   reviewRef.push(reviewInputData).then(() => {
+    //     setNewReview("");
+    //   });
+    // } else {
+    //   Alert.alert("로그인하세요!");
+    // }
   };
 
   const handleOccupiedSeatsChange = (newOccupiedSeats) => {
@@ -71,7 +80,11 @@ const ParkingLotDetails = ({ route }) => {
   };
 
   const submitReview = () => {
-    saveReview();
+    if (!uid) {
+      return Alert.alert("로그인 하세요");
+    } else {
+      saveReview();
+    }
   };
 
   // 클릭 이벤트를 텍스트에 적용하고 눌렸을 때는 추가적으로 정보를 더 볼 수 있도록 하기(기본값을 false)

@@ -13,29 +13,10 @@ const CheckFavorite = ({ parkingLotId, prkplceNm }) => {
     getFavoriteStatus();
   }, []);
 
-  const favoritesRef = database().ref(`users/${user.uid}/favorites`);
-
-  const checkFavoriteStatus = async () => {
-    if (user) {
-      try {
-        const favoritesSnapshot = await database()
-          .ref(`users/${user.uid}/favorites`)
-          .orderByChild("pakringLotId")
-          .equalTo(parkingId)
-          .once("value");
-
-        const favorites = favoritesSnapshot.val();
-        console.log("스냅샷", favorites);
-        setIsFavorite(favorites && favorites[favoriteStatus] ? true : false);
-      } catch (error) {
-        console.log("Error checking favorite status:", error);
-      }
-    }
-  };
-
   const getFavoriteStatus = async () => {
     if (user) {
       try {
+        const favoritesRef = database().ref(`users/${user.uid}/favorites`);
         const snapshot = await favoritesRef
           .orderByChild("parkingLotId")
           .equalTo(parkingId)
@@ -61,6 +42,7 @@ const CheckFavorite = ({ parkingLotId, prkplceNm }) => {
   const toggleFavorite = () => {
     if (user) {
       try {
+        const favoritesRef = database().ref(`users/${user.uid}/favorites`);
         const favoriteStatus = !isFavorite;
 
         favoritesRef.push({

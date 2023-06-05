@@ -40,9 +40,9 @@ const FavoriteList = ({ route }) => {
 
   const getFavorites = async () => {
     const user = auth().currentUser;
-    const favoritesRef = database().ref(`users/${user.uid}/favorites`);
     if (user) {
       try {
+        const favoritesRef = database().ref(`users/${user.uid}/favorites`);
         const snapshot = await favoritesRef.once("value");
 
         const data = snapshot.val();
